@@ -1,0 +1,75 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\vb.net-learning\\VB_Ado_Practice\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{CD8E53D2-B177-494B-AE08-1CEEF98E43D7}|VB_Ado_Practice\\VB_Ado_Practice_WebForm.vbproj|d:\\vb.net-learning\\vb_ado_practice\\vb_ado_practice\\default.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
+      "RelativeMoniker": "D:0:0:{CD8E53D2-B177-494B-AE08-1CEEF98E43D7}|VB_Ado_Practice\\VB_Ado_Practice_WebForm.vbproj|solutionrelative:vb_ado_practice\\default.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CD8E53D2-B177-494B-AE08-1CEEF98E43D7}|VB_Ado_Practice\\VB_Ado_Practice_WebForm.vbproj|d:\\vb.net-learning\\vb_ado_practice\\vb_ado_practice\\default.aspx.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "RelativeMoniker": "D:0:0:{CD8E53D2-B177-494B-AE08-1CEEF98E43D7}|VB_Ado_Practice\\VB_Ado_Practice_WebForm.vbproj|solutionrelative:vb_ado_practice\\default.aspx.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CD8E53D2-B177-494B-AE08-1CEEF98E43D7}|VB_Ado_Practice\\VB_Ado_Practice_WebForm.vbproj|d:\\vb.net-learning\\vb_ado_practice\\vb_ado_practice\\web.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
+      "RelativeMoniker": "D:0:0:{CD8E53D2-B177-494B-AE08-1CEEF98E43D7}|VB_Ado_Practice\\VB_Ado_Practice_WebForm.vbproj|solutionrelative:vb_ado_practice\\web.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Default.aspx.vb",
+              "DocumentMoniker": "D:\\vb.net-learning\\VB_Ado_Practice\\VB_Ado_Practice\\Default.aspx.vb",
+              "RelativeDocumentMoniker": "VB_Ado_Practice\\Default.aspx.vb",
+              "ToolTip": "D:\\vb.net-learning\\VB_Ado_Practice\\VB_Ado_Practice\\Default.aspx.vb",
+              "RelativeToolTip": "VB_Ado_Practice\\Default.aspx.vb",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAuwAQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2026-04-21T12:01:13.442Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Default.aspx",
+              "DocumentMoniker": "D:\\vb.net-learning\\VB_Ado_Practice\\VB_Ado_Practice\\Default.aspx",
+              "RelativeDocumentMoniker": "VB_Ado_Practice\\Default.aspx",
+              "ToolTip": "D:\\vb.net-learning\\VB_Ado_Practice\\VB_Ado_Practice\\Default.aspx",
+              "RelativeToolTip": "VB_Ado_Practice\\Default.aspx",
+              "LogicalView": "7651a703-06e5-11d1-8ebd-00a0c90f26ea",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
+              "WhenOpened": "2026-04-21T12:00:57.617Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Web.config",
+              "DocumentMoniker": "D:\\vb.net-learning\\VB_Ado_Practice\\VB_Ado_Practice\\Web.config",
+              "RelativeDocumentMoniker": "VB_Ado_Practice\\Web.config",
+              "ToolTip": "D:\\vb.net-learning\\VB_Ado_Practice\\VB_Ado_Practice\\Web.config",
+              "RelativeToolTip": "VB_Ado_Practice\\Web.config",
+              "ViewState": "AgIAABcAAAAAAAAAAAAAAC4AAABUAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000601|",
+              "WhenOpened": "2026-04-21T11:56:34.584Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

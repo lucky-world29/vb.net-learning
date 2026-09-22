@@ -1,0 +1,860 @@
+﻿
+@model List<vCore_MVC.Models.CoreTenantOrganisation>
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" />
+<link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.bootstrap5.min.css" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+
+<style>
+    /* REMOVE EXTRA SPACE */
+    .px-2 { padding-left: 8px !important; padding-right: 8px !important; }
+
+    /* HEADER */
+    .org-header {
+        background: linear-gradient(90deg, #ff9a9e, #fad0c4);
+        padding: 10px;
+        text-align: center;
+        font-size: 16px;
+        font-weight: 600;
+        border-radius: 6px;
+        margin-bottom: 10px;
+    }
+
+    /* CARD */
+    .org-card {
+        background: #fff;
+        border-radius: 8px;
+        padding: 10px;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+    }
+
+    /* TABLE */
+    .org-table {
+        width: 100%;
+        font-size: 13px;
+    }
+
+    .org-table thead th {
+        background: #f5f6f8;
+        font-weight: 600;
+        font-size: 12px;
+        padding: 8px;
+        text-align: left;
+    }
+
+    .org-table tbody tr:hover {
+        background: #f9fbff;
+    }
+
+    .org-table td {
+        padding: 8px;
+        vertical-align: middle;
+    }
+
+    /* COLUMN WIDTHS */
+    .col-actions { width: 90px; }
+    .col-org { width: 180px; }
+    .col-contact { width: 220px; }
+    .col-web { width: 150px; }
+    .col-address { width: 280px; }
+    .col-business { width: 180px; }
+    .col-status { width: 100px; }
+
+    .org-name { font-weight: 600; }
+    .org-code { font-size: 11px; color: #6c757d; }
+
+    .contact-line {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 12px;
+    }
+
+    .web-link {
+        color: #0d6efd;
+        text-decoration: none;
+        font-weight: 500;
+    }
+    .web-link:hover { text-decoration: underline; }
+
+    .address-main { font-size: 12px; }
+    .address-sub { font-size: 11px; color: #6c757d; }
+
+    .status-badge {
+        padding: 4px 10px;
+        font-size: 11px;
+        border-radius: 12px;
+        font-weight: 500;
+    }
+    .status-badge.active {
+        background: #28a745;
+        color: #fff;
+    }
+    .status-badge.deleted {
+        background: #dc3545;
+        color: #fff;
+    }
+
+    /**/
+
+    /* ===== MODAL ===== */
+
+#orgModal .modal-content {
+    border: none;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.18);
+}
+
+/* HEADER */
+#orgModal .modal-header {
+    background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+    color: white;
+    border-bottom: none;
+    padding: 18px 24px;
+}
+
+#orgModal .modal-title {
+    font-size: 24px;
+    font-weight: 600;
+}
+
+/* BODY */
+#orgModal .modal-body {
+    padding: 24px;
+    background: #f8fafc;
+}
+
+/* FOOTER */
+#orgModal .modal-footer {
+    border-top: 1px solid #e5e7eb;
+    padding: 16px 24px;
+    background: white;
+}
+
+/* INPUTS */
+#orgModal .form-control,
+#orgModal textarea {
+    border-radius: 10px;
+    border: 1px solid #d1d5db;
+    min-height: 42px;
+    box-shadow: none;
+}
+
+#orgModal .form-control:focus,
+#orgModal textarea:focus {
+    border-color: #8b5cf6;
+    box-shadow: 0 0 0 3px rgba(139,92,246,0.15);
+}
+
+/* LABELS */
+#orgModal .form-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 6px;
+}
+
+/* LOGO CARD */
+.logo-card {
+    background: white;
+    border-radius: 14px;
+    padding: 18px;
+    text-align: center;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+}
+
+.logo-card img {
+    max-height: 180px;
+    object-fit: contain;
+}
+
+/* SECTION */
+.section-card {
+    background: white;
+    border-radius: 14px;
+    padding: 18px;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+}
+
+/* BUTTONS */
+#saveBtn {
+    background: #8b5cf6;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 20px;
+    font-weight: 600;
+}
+
+#saveBtn:hover {
+    background: #7c3aed;
+}
+
+#orgModal .btn-secondary {
+    border-radius: 10px;
+    padding: 10px 20px;
+}
+
+/* SCROLL */
+#orgModal .modal-body {
+    max-height: 75vh;
+    overflow-y: auto;
+}
+
+#orgModal .form-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #4b5563;
+    margin-bottom: 6px;
+}
+
+#orgModal .form-control,
+#orgModal textarea {
+    border-radius: 10px;
+    border: 1px solid #d1d5db;
+    min-height: 42px;
+    box-shadow: none;
+    transition: all 0.2s ease;
+}
+
+#orgModal .form-control:focus,
+#orgModal textarea:focus {
+    border-color: #8b5cf6;
+    box-shadow: 0 0 0 3px rgba(139,92,246,0.15);
+}
+
+#orgModal .modal-body {
+    background: #f8fafc;
+}
+
+#orgModal .modal-content {
+    border: none;
+    border-radius: 18px;
+    overflow: hidden;
+}
+
+#orgModal .modal-header {
+    background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+    color: white;
+    border-bottom: none;
+}
+
+#orgModal .modal-footer {
+    background: white;
+    border-top: 1px solid #e5e7eb;
+}
+
+/*/*/
+#orgTable tbody tr:hover {
+    background-color: #f8fafc;
+}
+
+#orgTable thead th {
+    background-color: #f3e8ff !important;
+    color: #7e22ce !important;
+    font-weight: 600;
+    border-bottom: 1px solid #d8b4fe !important;
+    padding: 12px;
+}
+
+#orgTable {
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+#orgTable tbody td {
+    vertical-align: middle;
+    padding: 12px;
+}
+
+/* Optional Card Styling */
+.org-card {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    padding: 15px;
+}
+
+/* Optional Title Bar */
+.page-title-bar {
+    background: linear-gradient(90deg, #9333ea, #7e22ce);
+    color: white;
+    padding: 12px 20px;
+    border-radius: 6px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+/* Optional Action Bar */
+.action-bar {
+    margin-bottom: 15px;
+}
+
+</style>
+
+<div class="px-2 py-2">
+    <div class="org-header">
+        <i class="fa fa-building"></i> REGISTER ORGANISATIONS MANAGEMENT
+    </div>
+
+    <div class="org-card">
+        <div class="table-responsive">
+            <table id="orgTable" class="table org-table  table-hover align-middle">
+                <thead>
+                    <tr>
+                        <th class="col-actions">Actions</th>
+                        <th class="col-org">Organisation</th>
+                        <th class="col-contact">Contact</th>
+                        <th class="col-web">Website</th>
+                        <th class="col-address">Address</th>
+                        <th class="col-business">Business</th>
+                        <th class="col-status">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var org in Model)
+                    {
+                        <tr data-id="@org.TenantId">
+                            <!-- ACTIONS -->
+                            <td>
+                                <button class="btn btn-sm btn-success viewBtn" data-id="@org.TenantId">
+                                    <i class="fa fa-eye"></i>
+                                </button>
+                                <button class="btn btn-sm btn-primary editBtn" data-id="@org.TenantId">
+                                    <i class="fa fa-pen"></i>
+                                </button>
+                            </td>
+                            <!-- ORGANISATION -->
+                            <td class="col-org">
+                                <div class="org-name">@org.OrganisationName</div>
+                                <div class="org-code">@org.ShortCode</div>
+                            </td>
+                            <!-- CONTACT -->
+                            <td class="col-contact">
+                                <div class="contact-line">
+                                    <i class="fa fa-envelope text-primary"></i>
+                                    <span class="email">@org.Email</span>
+                                </div>
+                                <div class="contact-line">
+                                    <i class="fa fa-phone text-success"></i>
+                                    <span class="phone">@org.Phone</span>
+                                </div>
+                            </td>
+                            <!-- WEBSITE -->
+                            <td class="col-web">
+                                @if (!string.IsNullOrEmpty(org.Website))
+                                {
+                                    var display = org.Website.Replace("https://", "").Replace("http://", "").Split('/')[0];
+                                    var fullUrl = org.Website.StartsWith("http") ? org.Website : "https://" + org.Website;
+                                    <a href="@fullUrl" target="_blank" class="web-link">@display</a>
+                                }
+                                else
+                                {
+                                    <span class="text-muted">-</span>
+                                }
+                            </td>
+                            <!-- ADDRESS -->
+                            <td class="col-address">
+                                <div class="address-main">@org.Address</div>
+                                <div class="address-sub">@org.City, @org.Country</div>
+                            </td>
+                            <!-- BUSINESS -->
+                            <td class="col-business">
+                                <div><b>ROC:</b> @org.ROC</div>
+                                <div><b>Tax:</b> @org.SalesTaxNo</div>
+                            </td>
+                            <!-- STATUS -->
+                            <td class="col-status">
+                                <span class="status-badge @(org.IsDeleted == 0.0f ? "active" : "deleted")">
+                                    @(org.IsDeleted == 0.0f ? "Active" : "Deleted")
+                                </span>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+@* Modal for View Edit and Update *@
+<div class="modal fade" id="orgModal" tabindex="-1">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content">
+
+            <!-- HEADER -->
+            <div class="modal-header">
+                <h4 class="modal-title" id="modalTitle">
+                    Organisation Details
+                </h4>
+
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal">
+                </button>
+            </div>
+
+            <!-- BODY -->
+            <div class="modal-body">
+
+                <div class="row g-4">
+
+                    <!-- LOGO -->
+                    <div class="col-md-3 text-center">
+
+                        <img id="orgLogo"
+                             src=""
+                             class="img-fluid border rounded p-2"
+                             style="max-height:220px;" />
+
+                        <input type="file"
+                               id="logoFile"
+                               class="form-control mt-3" />
+                    </div>
+
+                    <!-- FORM -->
+                    <div class="col-md-9">
+
+    <div class="row g-4">
+
+        <!-- Organisation -->
+        <div class="col-md-8">
+            <label class="form-label">Organisation Name</label>
+            <input type="text" id="mName" class="form-control" />
+        </div>
+
+        <div class="col-md-4">
+            <label class="form-label">ShortCode</label>
+            <input type="text" id="mCode" class="form-control" />
+        </div>
+
+        <!-- Business -->
+        <div class="col-md-4">
+            <label class="form-label">TIN No</label>
+            <input type="text" id="mTIN" class="form-control" />
+        </div>
+
+        <div class="col-md-4">
+            <label class="form-label">Sales and Service Tax No</label>
+            <input type="text" id="mSalesTaxNo" class="form-control" />
+        </div>
+
+        @* <div class="col-md-4">
+            <label class="form-label">Service Tax No</label>
+            <input type="text" id="mServiceTaxNo" class="form-control" />
+        </div> *@
+
+        <div class="col-md-6">
+            <label class="form-label">ROC No</label>
+            <input type="text" id="mROC" class="form-control" />
+        </div>
+
+        <div class="col-md-6">
+            <label class="form-label">Currency</label>
+            <input type="text" id="mCurrency" class="form-control" />
+        </div>
+
+        <!-- Contact -->
+        <div class="col-md-4">
+            <label class="form-label">Email Address</label>
+            <input type="email" id="mEmail" class="form-control" />
+        </div>
+
+        <div class="col-md-4">
+            <label class="form-label">Website</label>
+            <input type="text" id="mWebsite" class="form-control" />
+        </div>
+
+        <div class="col-md-4">
+            <label class="form-label">Phone No</label>
+            <input type="text" id="mPhone" class="form-control" />
+        </div>
+
+        <div class="col-md-6">
+            <label class="form-label">Fax Number</label>
+            <input type="text" id="mFax" class="form-control" />
+        </div>
+
+        <div class="col-md-6">
+            <label class="form-label">Attention To</label>
+            <input type="text" id="mAttentionTo" class="form-control" />
+        </div>
+
+        <!-- Address -->
+        <div class="col-md-6">
+            <label class="form-label">City</label>
+            <input type="text" id="mCity" class="form-control" />
+        </div>
+
+        <div class="col-md-6">
+            <label class="form-label">State</label>
+            <input type="text" id="mState" class="form-control" />
+        </div>
+
+        <div class="col-md-6">
+            <label class="form-label">Country</label>
+            <input type="text" id="mCountry" class="form-control" />
+        </div>
+
+        <div class="col-md-6">
+            <label class="form-label">Zip Code</label>
+            <input type="text" id="mZipcode" class="form-control" />
+        </div>
+
+        <div class="col-md-12">
+            <label class="form-label">Address</label>
+            <textarea id="mAddress"
+                      class="form-control"
+                      rows="3"></textarea>
+        </div>
+
+        <!-- Extra -->
+        <div class="col-md-12">
+            <label class="form-label">Footer Report</label>
+            <textarea id="mReportFooter"
+                      class="form-control"
+                      rows="3"></textarea>
+        </div>
+
+        <div class="col-md-6">
+            <label class="form-label">Remarks</label>
+            <input type="text" id="mRemark" class="form-control" />
+        </div>
+
+        <div class="col-md-6">
+            <label class="form-label">Detention Free Days</label>
+            <input type="number" id="mDetentionDays" class="form-control" />
+        </div>
+
+        <div class="col-md-6">
+    <label class="form-label">Incentive Start Date</label>
+    <input type="date"
+           id="mIncentiveStartDate"
+           class="form-control" />
+</div>
+
+<div class="col-md-6">
+    <label class="form-label">Incentive End Date</label>
+    <input type="date"
+           id="mIncentiveEndDate"
+           class="form-control" />
+</div>
+
+    </div>
+
+</div>
+                </div>
+            </div>
+
+            <!-- FOOTER -->
+            <div class="modal-footer">
+
+                <button type="button"
+                        class="btn btn-secondary"
+                        data-bs-dismiss="modal">
+                    Cancel
+                </button>
+
+                <button type="button"
+                        class="btn btn-primary"
+                        id="saveBtn">
+                    Save
+                </button>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- DataTables -->
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+
+<!-- DataTables Buttons -->
+<script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.bootstrap5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.colVis.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
+
+<!-- JSZip -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+
+<script type="text/javascript">
+
+    let currentId = 0;
+    let isViewMode = false;
+
+    $(document).ready(function () {
+
+        // =========================
+        // DATATABLE
+        // =========================
+        $('#orgTable').DataTable({
+            pageLength: 5,
+            lengthChange: false,
+            ordering: true,
+            language: {
+                search: "",
+                searchPlaceholder: "Search..."
+            }
+        });
+
+        // =========================
+        // EDIT BUTTON
+        // =========================
+        $(document).on("click", ".editBtn", function () {
+
+            isViewMode = false;
+            currentId = $(this).data("id");
+
+            fillModal(currentId);
+
+            enableFields(true);
+
+            $("#modalTitle").text("Update Organisation");
+
+            $("#saveBtn").show();
+
+            $("#orgLogo").attr(
+                "src",
+                "/Administration/GetOrgImage?id=" + currentId
+            );
+
+            $("#orgModal").modal("show");
+        });
+
+        // =========================
+        // VIEW BUTTON
+        // =========================
+        $(document).on("click", ".viewBtn", function () {
+
+            isViewMode = true;
+            currentId = $(this).data("id");
+
+            fillModal(currentId);
+
+            enableFields(false);
+
+            $("#modalTitle").text("View Organisation");
+
+            $("#saveBtn").hide();
+
+            $("#orgLogo").attr(
+                "src",
+                "/Administration/GetOrgImage?id=" + currentId
+            );
+
+            $("#orgModal").modal("show");
+        });
+
+        // =========================
+        // IMAGE PREVIEW
+        // =========================
+        $("#logoFile").on("change", function (e) {
+
+            let file = e.target.files[0];
+
+            if (!file) return;
+
+            let reader = new FileReader();
+
+            reader.onload = function (e) {
+                $("#orgLogo").attr("src", e.target.result);
+            };
+
+            reader.readAsDataURL(file);
+        });
+
+        // =========================
+        // SAVE BUTTON
+        // =========================
+        $("#saveBtn").click(function () {
+
+            let formData = new FormData();
+
+            formData.append("TenantId", currentId);
+            formData.append("OrganisationName", $("#mName").val());
+            formData.append("ShortCode", $("#mCode").val());
+            formData.append("Email", $("#mEmail").val());
+            formData.append("Website", $("#mWebsite").val());
+            formData.append("Phone", $("#mPhone").val());
+            formData.append("Address", $("#mAddress").val());
+            formData.append("City", $("#mCity").val() || "");
+            formData.append("ROC", $("#mROC").val());
+
+            formData.append("TIN", $("#mTIN").val());
+
+            formData.append("SalesTaxNo", $("#mSalesTaxNo").val());
+
+formData.append("ServiceTaxNo", $("#mServiceTaxNo").val());
+
+formData.append("Fax", $("#mFax").val());
+
+formData.append("AttentionTo", $("#mAttentionTo").val());
+
+formData.append("State", $("#mState").val());
+
+formData.append("Zipcode", $("#mZipcode").val());
+
+formData.append("Country", $("#mCountry").val());
+
+formData.append("Currency", $("#mCurrency").val());
+
+formData.append("ReportFooter", $("#mReportFooter").val());
+
+formData.append("Remark", $("#mRemark").val());
+
+formData.append("DetentionDays", $("#mDetentionDays").val());
+
+formData.append("IncentiveStartDate", $("#mIncentiveStartDate").val());
+
+formData.append("IncentiveEndDate", $("#mIncentiveEndDate").val());
+            
+
+            let file = $("#logoFile")[0].files[0];
+
+            if (file) {
+                formData.append("logoFile", file);
+            }
+
+            $.ajax({
+                url: "/Administration/UpdateOrganisation",
+                type: "POST",
+                data: formData,
+                contentType: false,
+                processData: false,
+
+                success: function (res) {
+
+                    if (res.success) {
+                        location.reload();
+                    }
+                    else {
+                        alert(res.message || "Update failed");
+                    }
+                },
+
+                error: function () {
+                    alert("Error occurred while saving.");
+                }
+            });
+        });
+
+    });
+
+    // =========================
+    // FILL MODAL
+    // =========================
+    function fillModal(id) {
+
+    $.get('/Administration/GetOrganisationDetails', { id: id }, function (res) {
+
+        if (!res) {
+            alert("Organisation data not found");
+            return;
+        }
+
+        $("#mName").val(res.organisationName);
+        $("#mCode").val(res.shortCode);
+
+        $("#mEmail").val(res.email);
+        $("#mWebsite").val(res.website);
+
+        $("#mPhone").val(res.phone);
+        $("#mFax").val(res.fax);
+
+        $("#mAttentionTo").val(res.attentionTo);
+
+        $("#mAddress").val(res.address);
+
+        $("#mCity").val(res.city);
+        $("#mState").val(res.state);
+
+        $("#mCountry").val(res.country);
+        $("#mZipcode").val(res.zipcode);
+
+        $("#mCurrency").val(res.currency);
+
+        $("#mROC").val(res.roc);
+
+        $("#mTIN").val(res.tin);
+
+        $("#mSalesTaxNo").val(res.salesTaxNo);
+
+        $("#mServiceTaxNo").val(res.serviceTaxNo);
+
+        $("#mReportFooter").val(res.reportFooter);
+
+        $("#mRemark").val(res.remark);
+
+        $("#mDetentionDays").val(res.detentionDays);
+
+        $("#mIncentiveStartDate").val(
+            formatDate(res.incentiveStartDate)
+        );
+
+        $("#mIncentiveEndDate").val(
+            formatDate(res.incentiveEndDate)
+        );
+
+        if (res.hasImage) {
+            $("#orgLogo").attr(
+                "src",
+                "/Administration/GetOrgImage?id=" + res.tenantId
+            );
+        }
+    });
+}
+//DATE FORMAT FUNCTION
+function formatDate(dateString) {
+
+    if (!dateString) return "";
+
+    let d = new Date(dateString);
+
+    return d.toISOString().split('T')[0];
+}
+    // =========================
+    // EXTRACT VALUE
+    // =========================
+    function extractValue(html, key) {
+
+        let temp = $("<div>").html(html);
+
+        let text = temp.text();
+
+        let start = text.indexOf(key);
+
+        if (start === -1) {
+            return "";
+        }
+
+        let value = text.substring(start + key.length).trim();
+
+        return value.split(/\s+/)[0];
+    }
+
+    // =========================
+    // ENABLE / DISABLE FIELDS
+    // =========================
+    function enableFields(enable) {
+
+        $("#orgModal input, #orgModal textarea")
+            .prop("disabled", !enable);
+    }
+
+</script>
+
+
+}
+

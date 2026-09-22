@@ -1,0 +1,2000 @@
+﻿ 
+@{
+    ViewData["Title"] = "Animated Transport Order Management";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Request of Transport Order Management</title>
+    <!-- Main Stylesheet for this page .. -->
+    <link rel="stylesheet" href="~/css/rot/create.css" />
+    
+</head>
+<body>
+
+<div class="container-fluid px-4">
+    <!-- Main Header -->
+    <header class="main-header">
+        <div>
+            <h1><i class="fas fa-truck-fast me-2"></i> Request of Transport Order Management</h1>
+        </div>
+        <div class="header-info text-end">
+            <div><i class="far fa-calendar-alt me-1"></i> @ViewBag.CurrentDateTime</div>
+            <div><i class="far fa-user me-1"></i> @User.FindFirst(System.Security.Claims.ClaimTypes.Role)?.Value</div>
+        </div>
+    </header>
+
+    <!-- General Information Section -->
+    <div class="card">
+        <div class="section-header">
+            <i class="fas fa-info-circle section-icon"></i>
+            General Information
+            <i class="fas fa-chevron-up toggle-icon"></i>
+        </div>
+        <div class="card-body p-3">
+            <div class="row row-compact">
+                <div class="col-md-4">
+                    <label class="form-label">ROT Number <span class="required-star">*</span></label>
+
+                    <input type="text"
+                           name="RotNumber"
+                           class="form-control"
+                           value="@ViewBag.RotNumber"
+                           readonly>
+                           <span id="currentDateTime" style="font-size: 10px;">
+                                    <span class="pl-1">@ViewBag.CurrentDateTime</span>
+                           </span>
+                 </div>
+                <div class="col-md-4">
+                    <label class="form-label">Delivery Date & Time</label>
+                    <div class="input-group input-group-sm">
+                        <input type="datetime-local" class="form-control" value="2024-04-24T11:25">
+                        <span class="input-group-text"><i class="far fa-calendar"></i></span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Business Type</label>
+                    <input type="text" 
+                           name="BusinessType"
+                           class="form-control" 
+                           value="HAULAGE-HAULAGE" 
+                           readonly>
+                </div>
+            </div>
+
+            <div class="row row-compact">
+                <div class="col-md-4">
+                    <label class="form-label">Job Type <span class="required-star">*</span></label>
+                    <select class="form-select">
+                            <option value="0">Select Job Type</option>
+                            <option value="1">EXPORT</option>
+                            <option value="2">IMPORT</option>
+                            <option value="3">MT Repo</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Job Process Type <span class="required-star">*</span></label>
+                    <select class="form-select">
+                        <option selected>ROUND TRIP</option>
+                        <option>ONE WAY</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Service Type <span class="required-star">*</span></label>
+                    <select class="form-select" id="ServiceTypeDropdown"
+                            name="ServiceType">
+                        <option selected value="">Select Service Type</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row row-compact">
+                <div class="col-md-4">
+                    <label class="form-label">Commodity</label>
+                    <div class="input-group input-group-sm">
+                        <input type="hidden" id="commodityId" name="Commodity_Id">
+                        <input type="text" id="commodityInput" class="form-control" placeholder="Search For Commodity">                        
+                        <span class="input-group-text"><i class="fas fa-search"></i></span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Branch</label>
+                    <input type="text" class="form-control">
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Sub Branch</label>
+                    <select class="form-select">
+                        <option selected>Select Sub Unit</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row row-compact mt-2">
+                <div class="col-md-4">
+                    <label class="form-label">Tariff Surcharge</label>
+
+                    <select id="TariffLocationDropdown"
+        name="SelectedSurcharges"
+        class="form-control form-control-sm txtfield"
+        multiple
+        style="height:90px; font-size:12px;">
+</select>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Transport Parties Section -->
+    <div class="card">
+        <div class="section-header">
+            <i class="fas fa-users section-icon"></i>
+            Transport Parties Information
+            <i class="fas fa-chevron-up toggle-icon"></i>
+        </div>
+        <div class="card-body p-3">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="mb-2">
+                        <label class="form-label">Bill To <span class="required-star">*</span></label>
+                        <div class="input-group input-group-sm">
+                            <input type="text" class="form-control" value="SINGLE GLORY SDN BHD">
+                            <span class="input-group-text">SGLORY</span>
+                            <button class="btn btn-outline-primary" type="button"><i class="fas fa-plus"></i></button>
+                        </div>
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-label">Billing Address</label>
+                        <div class="input-group input-group-sm">
+                            <textarea class="form-control textarea-compact">TBA</textarea>
+                            <button class="btn btn-outline-secondary" type="button"><i class="fas fa-pencil-alt"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="mb-2">
+                        <label class="form-label">Load Port <span class="required-star">*</span></label>
+                        <div class="input-group input-group-sm">
+                            <input type="text" class="form-control" placeholder="Search for Load Port">
+                            <button class="btn btn-outline-primary" type="button"><i class="fas fa-plus"></i></button>
+                        </div>
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-label">Terminal Name <span class="required-star">*</span></label>
+                        <div class="input-group input-group-sm">
+                            <input type="text" class="form-control" placeholder="Search for Terminal">
+                            <button class="btn btn-outline-primary" type="button"><i class="fas fa-plus"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="mb-2">
+                        <label class="form-label">Vessel Name <i class="fas fa-search text-info ms-1"></i></label>
+                        <input type="text" class="form-control" placeholder="Search for Vessel">
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-label">Closing Date Time</label>
+                        <input type="datetime-local" class="form-control" value="2024-04-24T11:25">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delivery/Collection Section -->
+    <div class="card">
+        <div class="section-header">
+            <i class="fas fa-map-location-dot section-icon"></i>
+            Delivery & Collection Information
+            <i class="fas fa-chevron-up toggle-icon"></i>
+        </div>
+        <div class="card-body p-3">
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="sub-card-header bg-pickup">
+                            <i class="fas fa-box-open"></i> Pick Up Information
+                        </div>
+                        <div class="card-body p-2">
+                            <div class="mb-2">
+                                <label class="form-label">Pick Up From <span class="required-star">*</span></label>
+                                <input type="text" class="form-control" placeholder="Search for Location">
+                            </div>
+                            <label class="form-label">Pick Up Address</label>
+                            <div class="input-group input-group-sm">
+                                <textarea class="form-control textarea-compact" placeholder="Address"></textarea>
+                                <button class="btn btn-outline-secondary" type="button"><i class="fas fa-pencil-alt"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="sub-card-header bg-delivery">
+                            <i class="fas fa-truck-ramp-box"></i> Delivery Information
+                        </div>
+                        <div class="card-body p-2">
+                            <div class="mb-2">
+                                <label class="form-label">Deliver To <span class="required-star">*</span></label>
+                                <div class="input-group input-group-sm">
+                                    <input type="text" class="form-control" value="SINGLE GLORY SDN BHD">
+                                    <span class="input-group-text">SGLORY</span>
+                                </div>
+                            </div>
+                            <label class="form-label">Delivery Address</label>
+                            <div class="input-group input-group-sm">
+                                <textarea class="form-control textarea-compact">TBA</textarea>
+                                <button class="btn btn-outline-secondary" type="button"><i class="fas fa-pencil-alt"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="sub-card-header bg-collection">
+                            <i class="fas fa-warehouse"></i> Collection Information
+                        </div>
+                        <div class="card-body p-2">
+                            <div class="mb-2">
+                                <label class="form-label">Collection Return To <span class="required-star">*</span></label>
+                                <input type="text" class="form-control" placeholder="Search for Location">
+                            </div>
+                            <label class="form-label">Collection Address</label>
+                            <div class="input-group input-group-sm">
+                                <textarea class="form-control textarea-compact" placeholder="Address"></textarea>
+                                <button class="btn btn-outline-secondary" type="button"><i class="fas fa-pencil-alt"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Required Quantity Section -->
+    <div class="card">
+        <div class="section-header">
+            <i class="fas fa-list-check section-icon"></i>
+            Required Quantity
+            <div class="ms-auto d-flex gap-2">
+                <button class="btn btn-sm btn-light text-primary border"><i class="fas fa-file-download me-1"></i> Sample</button>
+                <button class="btn btn-sm btn-success"><i class="fas fa-file-excel me-1"></i> Upload</button>
+            </div>
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover table-bordered">
+                    <thead>
+                        <tr>
+                            <th width="60">SL No.</th>
+                            <th>Size</th>
+                            <th>Type</th>
+                            <th>Weight</th>
+                            <th>Quantity</th>
+                            <th>Delivery Required</th>
+                            <th width="100" class="text-center">Actions <i class="fas fa-plus-circle text-primary ms-2 action-icon"></i></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="text-center">1</td>
+                            <td><select class="form-select"><option>Select Option</option></select></td>
+                            <td><select class="form-select"><option>Select Option</option></select></td>
+                            <td><input type="text" class="form-control" value="0"></td>
+                            <td><input type="text" class="form-control" value="1"></td>
+                            <td>
+                                <div class="btn-group btn-group-sm w-100">
+                                    <button class="btn btn-primary">DateTime</button>
+                                    <button class="btn btn-outline-secondary">TBA</button>
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <i class="fas fa-save text-success me-3 action-icon"></i>
+                                <i class="fas fa-trash-alt text-danger action-icon"></i>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Container Details Section -->
+    <div class="card">
+        <div class="section-header">
+            <i class="fas fa-boxes-stacked section-icon"></i>
+            Container Details
+            <i class="fas fa-chevron-up toggle-icon"></i>
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>SL.No</th>
+                            <th>Container Number</th>
+                            <th>Seal Number</th>
+                            <th>Size</th>
+                            <th>Type</th>
+                            <th>Weight</th>
+                            <th>Temp</th>
+                            <th>Handling</th>
+                            <th>Service</th>
+                            <th>Gate Pass</th>
+                            <th>Remark</th>
+                            <th>Remove</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="12" class="text-center text-muted py-4">
+                                <i class="fas fa-folder-open d-block mb-2 fs-4"></i>
+                                No container details added yet.
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="p-3 border-top bg-light">
+                <label class="form-label">General Remarks</label>
+                <textarea class="form-control" rows="2" placeholder="Enter any additional remarks here..."></textarea>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Actions -->
+    <div class="d-flex justify-content-end gap-3 mb-5">
+        <button class="btn btn-outline-secondary px-4 py-2"><i class="fas fa-times me-2"></i> Cancel</button>
+        <button class="btn btn-success px-4 py-2"><i class="fas fa-save me-2"></i> Save ROT Draft</button>
+        <button class="btn btn-primary px-4 py-2"><i class="fas fa-paper-plane me-2"></i> Save & Process CN</button>
+    </div>
+</div>
+
+
+    @section Scripts {
+        <!-- Select2 CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+        <!-- jQuery UI CSS -->
+        <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css" />
+
+        <!-- jQuery UI -->
+        <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+
+        <!-- Select2 -->
+        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+        <script src="~/js/rot/create.js"></script>
+    }
+</body>
+
+</html>
+  
+
+@*         @{
+    ViewData["Title"] = "Animated Transport Order Management";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Request of Transport Order Management</title>
+    <link rel="stylesheet" href="~/css/rot/create.css" />
+    <style>
+        /* ── RESET & ROOT ─────────────────────────────── */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --header-h: 48px;
+            --footer-h: 52px;
+            --accent:   #1a73e8;
+            --accent2:  #0d47a1;
+            --success:  #2e7d32;
+            --danger:   #c62828;
+            --border:   #dce1e9;
+            --bg-card:  #ffffff;
+            --bg-page:  #f0f4f9;
+            --text:     #1e293b;
+            --muted:    #64748b;
+            --sec-head: #e8edf5;
+            --pickup:   #1565c0;
+            --delivery: #2e7d32;
+            --collect:  #6a1b9a;
+            --radius:   6px;
+            --shadow:   0 1px 4px rgba(0,0,0,.10);
+        }
+
+        html, body {
+            height: 100%;
+            overflow: hidden;          /* ← no page scroll */
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            font-size: 12px;
+            color: var(--text);
+            background: var(--bg-page);
+        }
+
+        /* ── OUTER SHELL ─────────────────────────────── */
+        .rot-shell {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* ── TOP HEADER ──────────────────────────────── */
+        .main-header {
+            flex: 0 0 var(--header-h);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 14px;
+            background: linear-gradient(135deg, var(--accent2), var(--accent));
+            color: #fff;
+            box-shadow: 0 2px 6px rgba(0,0,0,.25);
+            z-index: 10;
+        }
+        .main-header h1 {
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: .3px;
+        }
+        .header-info { font-size: 10px; opacity: .88; text-align: right; line-height: 1.5; }
+
+        /* ── SCROLLABLE CONTENT AREA ─────────────────── */
+        .rot-body {
+            flex: 1 1 0;
+            overflow-y: auto;           /* internal scroll only */
+            overflow-x: hidden;
+            padding: 6px 10px 4px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        /* thin scrollbar */
+        .rot-body::-webkit-scrollbar { width: 5px; }
+        .rot-body::-webkit-scrollbar-track { background: transparent; }
+        .rot-body::-webkit-scrollbar-thumb { background: #bbb; border-radius: 3px; }
+
+        /* ── CARD ─────────────────────────────────────── */
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        /* ── SECTION HEADER ──────────────────────────── */
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 10px;
+            background: var(--sec-head);
+            border-bottom: 1px solid var(--border);
+            font-weight: 600;
+            font-size: 11.5px;
+            cursor: pointer;
+            user-select: none;
+            color: var(--accent2);
+        }
+        .section-header .toggle-icon {
+            margin-left: auto;
+            transition: transform .25s;
+            font-size: 10px;
+        }
+        .section-header.collapsed .toggle-icon { transform: rotate(180deg); }
+        .section-icon { color: var(--accent); }
+
+        /* ── COLLAPSIBLE BODY ─────────────────────────── */
+        .collapsible-body {
+            transition: max-height .3s ease, opacity .25s ease;
+            max-height: 600px;
+            opacity: 1;
+            overflow: hidden;
+        }
+        .collapsible-body.collapsed {
+            max-height: 0;
+            opacity: 0;
+        }
+
+        /* ── FORM ELEMENTS ────────────────────────────── */
+        .card-body { padding: 6px 10px; }
+
+        .row { display: flex; flex-wrap: wrap; margin: 0 -4px; }
+        .row-compact { margin-bottom: 0 !important; }
+
+        [class^="col-md-"] { padding: 0 4px; }
+        .col-md-4  { flex: 0 0 33.333%; max-width: 33.333%; }
+        .col-md-6  { flex: 0 0 50%;      max-width: 50%; }
+        .col-md-12 { flex: 0 0 100%;     max-width: 100%; }
+
+        .form-label {
+            display: block;
+            font-size: 10.5px;
+            font-weight: 600;
+            color: var(--muted);
+            margin-bottom: 2px;
+            margin-top: 4px;
+        }
+        .required-star { color: var(--danger); }
+
+        .form-control, .form-select {
+            width: 100%;
+            padding: 3px 7px;
+            font-size: 11px;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            background: #fff;
+            height: 26px;
+            color: var(--text);
+        }
+        .form-control:focus, .form-select:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 2px rgba(26,115,232,.15);
+        }
+        .form-control[readonly] { background: #f5f7fa; color: var(--muted); }
+
+        textarea.form-control {
+            height: auto;
+            resize: none;
+            padding: 3px 7px;
+            min-height: 40px;
+        }
+
+        select[multiple].form-control { height: 56px; }
+
+        .input-group {
+            display: flex;
+            align-items: stretch;
+        }
+        .input-group .form-control { border-radius: 4px 0 0 4px; flex: 1; }
+        .input-group-text {
+            display: flex;
+            align-items: center;
+            padding: 0 8px;
+            background: var(--sec-head);
+            border: 1px solid var(--border);
+            border-left: none;
+            font-size: 11px;
+            color: var(--muted);
+        }
+        .input-group .btn { border-radius: 0 4px 4px 0; padding: 0 8px; font-size: 11px; }
+
+        /* ── BUTTONS ──────────────────────────────────── */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            padding: 3px 10px;
+            font-size: 11px;
+            font-weight: 600;
+            border-radius: 4px;
+            border: 1px solid transparent;
+            cursor: pointer;
+            transition: filter .15s, box-shadow .15s;
+            white-space: nowrap;
+        }
+        .btn:hover { filter: brightness(.92); }
+        .btn-primary   { background: var(--accent);  color: #fff; border-color: var(--accent); }
+        .btn-success   { background: var(--success); color: #fff; border-color: var(--success); }
+        .btn-outline-primary   { background: #fff; color: var(--accent);  border-color: var(--accent); }
+        .btn-outline-secondary { background: #fff; color: var(--muted);   border-color: var(--border); }
+        .btn-outline-secondary:hover { background: var(--sec-head); }
+        .btn-light     { background: #fff; color: var(--accent); border-color: var(--border); }
+
+        .btn-group { display: flex; }
+        .btn-group .btn:not(:last-child) { border-radius: 4px 0 0 4px; border-right: none; }
+        .btn-group .btn:last-child       { border-radius: 0 4px 4px 0; }
+        .btn-group-sm .btn { padding: 2px 8px; font-size: 10.5px; }
+
+        /* ── SUB-CARDS (pickup/delivery/collection) ───── */
+        .sub-card {
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            overflow: hidden;
+            height: 100%;
+        }
+        .sub-card-header {
+            padding: 4px 10px;
+            font-size: 11px;
+            font-weight: 700;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .bg-pickup   { background: var(--pickup); }
+        .bg-delivery { background: var(--delivery); }
+        .bg-collection { background: var(--collect); }
+        .sub-card .card-body { padding: 6px 8px; }
+
+        /* ── TABLES ───────────────────────────────────── */
+        .table-responsive { overflow-x: auto; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 11px;
+        }
+        table th, table td {
+            padding: 4px 6px;
+            border: 1px solid var(--border);
+            vertical-align: middle;
+        }
+        table thead th {
+            background: var(--sec-head);
+            font-weight: 700;
+            color: var(--accent2);
+            white-space: nowrap;
+        }
+        table tbody tr:hover { background: #f7f9fc; }
+        table td select, table td input { height: 24px; font-size: 11px; }
+
+        /* ── FOOTER ACTIONS ───────────────────────────── */
+        .rot-footer {
+            flex: 0 0 var(--footer-h);
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 8px;
+            padding: 0 14px;
+            background: #fff;
+            border-top: 1px solid var(--border);
+            box-shadow: 0 -2px 6px rgba(0,0,0,.08);
+            z-index: 10;
+        }
+        .rot-footer .btn { padding: 6px 16px; font-size: 12px; }
+
+        /* ── SECTION TABS (top nav for quick jump) ────── */
+        .sec-tabs {
+            display: flex;
+            gap: 2px;
+            padding: 4px 10px 0;
+            background: var(--bg-page);
+            flex-wrap: nowrap;
+            overflow-x: auto;
+            flex: 0 0 auto;
+        }
+        .sec-tab {
+            padding: 3px 10px;
+            font-size: 10.5px;
+            font-weight: 600;
+            border-radius: 4px 4px 0 0;
+            cursor: pointer;
+            border: 1px solid transparent;
+            color: var(--muted);
+            background: #e2e8f0;
+            white-space: nowrap;
+            transition: background .15s, color .15s;
+        }
+        .sec-tab:hover, .sec-tab.active {
+            background: var(--accent);
+            color: #fff;
+        }
+
+        /* ── PANELS (single-visible mode) ────────────── */
+        .rot-panels {
+            flex: 1 1 0;
+            overflow: hidden;
+            position: relative;
+        }
+        .panel {
+            display: none;
+            height: 100%;
+            overflow-y: auto;
+            padding: 6px 10px;
+        }
+        .panel.active { display: block; }
+        .panel::-webkit-scrollbar { width: 5px; }
+        .panel::-webkit-scrollbar-thumb { background: #bbb; border-radius: 3px; }
+
+        /* ── UTILITIES ────────────────────────────────── */
+        .mb-1 { margin-bottom: 3px; }
+        .mb-2 { margin-bottom: 6px; }
+        .mt-2 { margin-top: 6px; }
+        .g-3  > [class^="col-"] { padding: 0 4px; }
+        .ms-auto { margin-left: auto; }
+        .d-flex { display: flex; }
+        .gap-2  { gap: 6px; }
+        .gap-3  { gap: 10px; }
+        .text-center { text-align: center; }
+        .text-muted  { color: var(--muted); }
+        .text-info   { color: #0288d1; }
+        .text-success{ color: var(--success); }
+        .text-danger { color: var(--danger); }
+        .py-3 { padding-top: 10px; padding-bottom: 10px; }
+        .fs-5 { font-size: 16px; }
+        .d-block { display: block; }
+        .w-100  { width: 100%; }
+        .bg-light { background: var(--sec-head); }
+        .border-top { border-top: 1px solid var(--border); }
+        .p-2  { padding: 6px; }
+        .p-3  { padding: 8px 10px; }
+        .p-0  { padding: 0; }
+        .action-icon { cursor: pointer; font-size: 13px; }
+        .action-icon:hover { opacity: .75; }
+        .text-primary { color: var(--accent); }
+        .h-100 { height: 100%; }
+
+        /* rows inside panels sit side by side */
+        .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px 10px; }
+        .two-col   { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 10px; }
+        .four-col  { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 6px 10px; }
+
+        /* Delivery sub-cards layout */
+        .sub-cards-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 8px;
+        }
+
+        /* Required quantity table container */
+        .qty-wrap { display: flex; flex-direction: column; height: 100%; }
+        .qty-header {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 10px;
+            background: var(--sec-head);
+            border-bottom: 1px solid var(--border);
+            font-weight: 600;
+            font-size: 11.5px;
+            color: var(--accent2);
+        }
+
+        /* Remarks area */
+        .remarks-row { padding: 6px 10px; background: var(--bg-card); border-top: 1px solid var(--border); }
+        .remarks-row textarea { font-size: 11px; height: 34px; resize: none; }
+
+        /* ── RESPONSIVE HELPER ────────────────────────── */
+        @@media (max-width: 900px) {
+            .three-col, .sub-cards-row { grid-template-columns: 1fr 1fr; }
+            .col-md-4 { flex: 0 0 50%; max-width: 50%; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="rot-shell">
+
+    <!-- ① TOP HEADER -->
+    <header class="main-header">
+        <h1><i class="fas fa-truck-fast me-2"></i> Request of Transport Order Management</h1>
+        <div class="header-info">
+            <div><i class="far fa-calendar-alt"></i> @ViewBag.CurrentDateTime</div>
+            <div><i class="far fa-user"></i> @User.FindFirst(System.Security.Claims.ClaimTypes.Role)?.Value</div>
+        </div>
+    </header>
+
+    <!-- ② SECTION TABS -->
+    <div class="sec-tabs" id="secTabs">
+        <div class="sec-tab active" data-panel="panel-general">
+            <i class="fas fa-info-circle"></i> General Info
+        </div>
+        <div class="sec-tab" data-panel="panel-parties">
+            <i class="fas fa-users"></i> Transport Parties
+        </div>
+        <div class="sec-tab" data-panel="panel-delivery">
+            <i class="fas fa-map-location-dot"></i> Delivery &amp; Collection
+        </div>
+        <div class="sec-tab" data-panel="panel-qty">
+            <i class="fas fa-list-check"></i> Required Qty
+        </div>
+        <div class="sec-tab" data-panel="panel-container">
+            <i class="fas fa-boxes-stacked"></i> Container Details
+        </div>
+    </div>
+
+    <!-- ③ PANELS -->
+    <div class="rot-panels">
+
+        <!-- PANEL 1 — GENERAL INFORMATION -->
+        <div class="panel active" id="panel-general">
+            <div class="card">
+                <div class="card-body p-3">
+
+                    <!-- Row 1 -->
+                    <div class="three-col">
+                        <div>
+                            <label class="form-label">ROT Number <span class="required-star">*</span></label>
+                            <input type="text" name="RotNumber" class="form-control"
+                                   value="@ViewBag.RotNumber" readonly>
+                            <span style="font-size:10px; color:var(--muted);">@ViewBag.CurrentDateTime</span>
+                        </div>
+                        <div>
+                            <label class="form-label">Delivery Date &amp; Time</label>
+                            <div class="input-group">
+                                <input type="datetime-local" class="form-control" value="2024-04-24T11:25">
+                                <span class="input-group-text"><i class="far fa-calendar"></i></span>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="form-label">Business Type</label>
+                            <input type="text" name="BusinessType" class="form-control"
+                                   value="HAULAGE-HAULAGE" readonly>
+                        </div>
+
+                        <div>
+                            <label class="form-label">Job Type <span class="required-star">*</span></label>
+                            <select class="form-select">
+                                <option value="0">Select Job Type</option>
+                                <option value="1">EXPORT</option>
+                                <option value="2">IMPORT</option>
+                                <option value="3">MT Repo</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="form-label">Job Process Type <span class="required-star">*</span></label>
+                            <select class="form-select">
+                                <option selected>ROUND TRIP</option>
+                                <option>ONE WAY</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="form-label">Service Type <span class="required-star">*</span></label>
+                            <select class="form-select" id="ServiceTypeDropdown" name="ServiceType">
+                                <option selected value="">Select Service Type</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="form-label">Commodity</label>
+                            <div class="input-group">
+                                <input type="hidden" id="commodityId" name="Commodity_Id">
+                                <input type="text" id="commodityInput" class="form-control"
+                                       placeholder="Search For Commodity">
+                                <span class="input-group-text"><i class="fas fa-search"></i></span>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="form-label">Branch</label>
+                            <input type="text" class="form-control">
+                        </div>
+                        <div>
+                            <label class="form-label">Sub Branch</label>
+                            <select class="form-select">
+                                <option selected>Select Sub Unit</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Tariff row -->
+                    <div style="margin-top:6px; max-width:33.333%; padding-right:4px;">
+                        <label class="form-label">Tariff Surcharge</label>
+                        <select id="TariffLocationDropdown" name="SelectedSurcharges"
+                                class="form-control" multiple style="height:56px;">
+                        </select>
+                    </div>
+
+                </div>
+            </div>
+        </div><!-- /panel-general -->
+
+        <!-- PANEL 2 — TRANSPORT PARTIES -->
+        <div class="panel" id="panel-parties">
+            <div class="card">
+                <div class="card-body p-3">
+                    <div class="three-col">
+
+                        <!-- Bill To -->
+                        <div>
+                            <label class="form-label">Bill To <span class="required-star">*</span></label>
+                            <div class="input-group mb-1">
+                                <input type="text" class="form-control" value="SINGLE GLORY SDN BHD">
+                                <span class="input-group-text">SGLORY</span>
+                                <button class="btn btn-outline-primary" type="button"><i class="fas fa-plus"></i></button>
+                            </div>
+                            <label class="form-label">Billing Address</label>
+                            <div class="input-group">
+                                <textarea class="form-control">TBA</textarea>
+                                <button class="btn btn-outline-secondary" type="button"><i class="fas fa-pencil-alt"></i></button>
+                            </div>
+                        </div>
+
+                        <!-- Load Port & Terminal -->
+                        <div>
+                            <label class="form-label">Load Port <span class="required-star">*</span></label>
+                            <div class="input-group mb-1">
+                                <input type="text" class="form-control" placeholder="Search for Load Port">
+                                <button class="btn btn-outline-primary" type="button"><i class="fas fa-plus"></i></button>
+                            </div>
+                            <label class="form-label">Terminal Name <span class="required-star">*</span></label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Search for Terminal">
+                                <button class="btn btn-outline-primary" type="button"><i class="fas fa-plus"></i></button>
+                            </div>
+                        </div>
+
+                        <!-- Vessel & Closing -->
+                        <div>
+                            <label class="form-label">Vessel Name <i class="fas fa-search text-info" style="margin-left:4px;"></i></label>
+                            <input type="text" class="form-control mb-1" placeholder="Search for Vessel">
+                            <label class="form-label">Closing Date Time</label>
+                            <input type="datetime-local" class="form-control" value="2024-04-24T11:25">
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div><!-- /panel-parties -->
+
+        <!-- PANEL 3 — DELIVERY & COLLECTION -->
+        <div class="panel" id="panel-delivery">
+            <div class="card">
+                <div class="card-body p-3">
+                    <div class="sub-cards-row">
+
+                        <!-- Pick Up -->
+                        <div class="sub-card">
+                            <div class="sub-card-header bg-pickup">
+                                <i class="fas fa-box-open"></i> Pick Up Information
+                            </div>
+                            <div class="card-body p-2">
+                                <label class="form-label">Pick Up From <span class="required-star">*</span></label>
+                                <input type="text" class="form-control mb-1" placeholder="Search for Location">
+                                <label class="form-label">Pick Up Address</label>
+                                <div class="input-group">
+                                    <textarea class="form-control" placeholder="Address"></textarea>
+                                    <button class="btn btn-outline-secondary" type="button"><i class="fas fa-pencil-alt"></i></button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Delivery -->
+                        <div class="sub-card">
+                            <div class="sub-card-header bg-delivery">
+                                <i class="fas fa-truck-ramp-box"></i> Delivery Information
+                            </div>
+                            <div class="card-body p-2">
+                                <label class="form-label">Deliver To <span class="required-star">*</span></label>
+                                <div class="input-group mb-1">
+                                    <input type="text" class="form-control" value="SINGLE GLORY SDN BHD">
+                                    <span class="input-group-text">SGLORY</span>
+                                </div>
+                                <label class="form-label">Delivery Address</label>
+                                <div class="input-group">
+                                    <textarea class="form-control">TBA</textarea>
+                                    <button class="btn btn-outline-secondary" type="button"><i class="fas fa-pencil-alt"></i></button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Collection -->
+                        <div class="sub-card">
+                            <div class="sub-card-header bg-collection">
+                                <i class="fas fa-warehouse"></i> Collection Information
+                            </div>
+                            <div class="card-body p-2">
+                                <label class="form-label">Collection Return To <span class="required-star">*</span></label>
+                                <input type="text" class="form-control mb-1" placeholder="Search for Location">
+                                <label class="form-label">Collection Address</label>
+                                <div class="input-group">
+                                    <textarea class="form-control" placeholder="Address"></textarea>
+                                    <button class="btn btn-outline-secondary" type="button"><i class="fas fa-pencil-alt"></i></button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div><!-- /panel-delivery -->
+
+        <!-- PANEL 4 — REQUIRED QUANTITY -->
+        <div class="panel" id="panel-qty">
+            <div class="card" style="height:100%;">
+                <div class="qty-header">
+                    <i class="fas fa-list-check section-icon"></i>
+                    Required Quantity
+                    <div class="ms-auto d-flex gap-2">
+                        <button class="btn btn-light"><i class="fas fa-file-download"></i> Sample</button>
+                        <button class="btn btn-success"><i class="fas fa-file-excel"></i> Upload</button>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-hover table-bordered">
+                        <thead>
+                            <tr>
+                                <th width="50">SL No.</th>
+                                <th>Size</th>
+                                <th>Type</th>
+                                <th>Weight</th>
+                                <th>Quantity</th>
+                                <th>Delivery Required</th>
+                                <th width="90" class="text-center">
+                                    Actions <i class="fas fa-plus-circle text-primary action-icon"></i>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="text-center">1</td>
+                                <td><select class="form-select"><option>Select Option</option></select></td>
+                                <td><select class="form-select"><option>Select Option</option></select></td>
+                                <td><input type="text" class="form-control" value="0"></td>
+                                <td><input type="text" class="form-control" value="1"></td>
+                                <td>
+                                    <div class="btn-group btn-group-sm w-100">
+                                        <button class="btn btn-primary">DateTime</button>
+                                        <button class="btn btn-outline-secondary">TBA</button>
+                                    </div>
+                                </td>
+                                <td class="text-center">
+                                    <i class="fas fa-save text-success action-icon" style="margin-right:8px;"></i>
+                                    <i class="fas fa-trash-alt text-danger action-icon"></i>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div><!-- /panel-qty -->
+
+        <!-- PANEL 5 — CONTAINER DETAILS -->
+        <div class="panel" id="panel-container">
+            <div class="card" style="height:100%;">
+                <div class="qty-header">
+                    <i class="fas fa-boxes-stacked section-icon"></i>
+                    Container Details
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>SL.No</th>
+                                <th>Container No.</th>
+                                <th>Seal No.</th>
+                                <th>Size</th>
+                                <th>Type</th>
+                                <th>Weight</th>
+                                <th>Temp</th>
+                                <th>Handling</th>
+                                <th>Service</th>
+                                <th>Gate Pass</th>
+                                <th>Remark</th>
+                                <th>Remove</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td colspan="12" class="text-center text-muted py-3">
+                                    <i class="fas fa-folder-open d-block fs-5" style="margin-bottom:4px;"></i>
+                                    No container details added yet.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="remarks-row">
+                    <label class="form-label">General Remarks</label>
+                    <textarea class="form-control"
+                              placeholder="Enter any additional remarks here..."></textarea>
+                </div>
+            </div>
+        </div><!-- /panel-container -->
+
+    </div><!-- /rot-panels -->
+
+    <!-- ④ FOOTER ACTIONS -->
+    <footer class="rot-footer">
+        <button class="btn btn-outline-secondary"><i class="fas fa-times"></i> Cancel</button>
+        <button class="btn btn-success"><i class="fas fa-save"></i> Save ROT Draft</button>
+        <button class="btn btn-primary"><i class="fas fa-paper-plane"></i> Save &amp; Process CN</button>
+    </footer>
+
+</div><!-- /rot-shell -->
+
+
+@section Scripts {
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css" />
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="~/js/rot/create.js"></script>
+
+    <script>
+    /* ── TAB SWITCHING ── */
+    document.querySelectorAll('.sec-tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+            // deactivate all
+            document.querySelectorAll('.sec-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+
+            // activate clicked
+            tab.classList.add('active');
+            const target = document.getElementById(tab.dataset.panel);
+            if (target) target.classList.add('active');
+        });
+    });
+    </script>
+}
+</body>
+</html> *@
+
+@* 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Request of Transport Order Management - 16:9 Layout</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+            * {
+                box-sizing: border-box;
+                margin: 0;
+                padding: 0;
+            }
+
+            html, body {
+                height: 100vh;
+                width: 100vw;
+                overflow: hidden;
+                font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+                font-size: 12px;
+                background: #f0f2f5;
+            }
+
+            .rot-shell {
+                display: flex;
+                flex-direction: column;
+                height: 100vh;
+                width: 100vw;
+            }
+
+            /* ── HEADER ───────────────────────────────────────────────────────────── */
+            .main-header {
+                flex: 0 0 auto;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 6px 12px;
+                background: linear-gradient(135deg, #1a73e8 0%, #1557b0 100%);
+                color: white;
+                box-shadow: 0 2px 8px rgba(0,0,0,.12);
+            }
+
+                .main-header h1 {
+                    margin: 0;
+                    font-size: 15px;
+                    font-weight: 700;
+                    display: flex;
+                    align-items: center;
+                    gap: 6px;
+                }
+
+            .header-info {
+                display: flex;
+                gap: 16px;
+                font-size: 10px;
+                font-weight: 500;
+            }
+
+                .header-info div {
+                    display: flex;
+                    align-items: center;
+                    gap: 4px;
+                }
+
+            /* ── MAIN CONTENT AREA ────────────────────────────────────────────────── */
+            .rot-content {
+                flex: 1 1 0;
+                overflow-y: auto;
+                overflow-x: hidden;
+                padding: 5px;
+                display: flex;
+                flex-direction: column;
+                gap: 2px;
+            }
+
+                .rot-content::-webkit-scrollbar {
+                    width: 5px;
+                }
+
+                .rot-content::-webkit-scrollbar-track {
+                    background: #e8eaed;
+                }
+
+                .rot-content::-webkit-scrollbar-thumb {
+                    background: #9aa0a6;
+                    border-radius: 3px;
+                }
+
+                    .rot-content::-webkit-scrollbar-thumb:hover {
+                        background: #5f6368;
+                    }
+
+            /* ── SECTION BLOCKS ───────────────────────────────────────────────────── */
+            .section-block {
+                background: #fff;
+                border: 1px solid #dadce0;
+                border-radius: 4px;
+                overflow: hidden;
+                flex-shrink: 0;
+                box-shadow: 0 1px 3px rgba(0,0,0,.08);
+            }
+
+            .section-title {
+                padding: 6px 10px;
+                background: linear-gradient(135deg, #1a73e8 0%, #1557b0 100%);
+                color: #fff;
+                font-size: 11px;
+                font-weight: 700;
+                display: flex;
+                align-items: center;
+                gap: 6px;
+                letter-spacing: 0.3px;
+            }
+
+            .section-body {
+                padding: 6px 8px;
+            }
+
+            /* ── FORM ROWS & GROUPS ───────────────────────────────────────────────── */
+            .form-row {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 2px;
+                margin-bottom: 2px;
+            }
+
+            .form-group {
+                flex: 1;
+                min-width: 140px;
+                display: flex;
+                align-items: center;
+                gap: 3px;
+            }
+
+                .form-group.full-width {
+                    flex: 0 0 100%;
+                    flex-direction: column;
+                    gap: 2px;
+                }
+
+                .form-group label {
+                    font-size: 10px;
+                    font-weight: 600;
+                    color: #202124;
+                    white-space: nowrap;
+                    flex-shrink: 0;
+                    min-width: fit-content;
+                    max-width: 45%;
+                }
+
+                .form-group.full-width label {
+                    max-width: none;
+                }
+
+            .required-star {
+                color: #d32f2f;
+                font-weight: 700;
+            }
+
+            .form-control, .form-select {
+                width: 100%;
+                padding: 3px 5px;
+                font-size: 10px;
+                border: 1px solid #dadce0;
+                border-radius: 3px;
+                background: #fff;
+                height: 24px;
+                color: #202124;
+                font-family: 'Roboto', inherit;
+                flex: 1;
+            }
+
+            .form-group.full-width .form-control,
+            .form-group.full-width .form-select {
+                flex: none;
+            }
+
+            .form-control:focus, .form-select:focus {
+                outline: none;
+                border-color: #1a73e8;
+                box-shadow: 0 0 0 2px rgba(26,115,232,.15);
+            }
+
+            .form-control[readonly] {
+                background: #f8f9fa;
+                color: #5f6368;
+            }
+
+            textarea.form-control {
+                height: auto;
+                resize: none;
+                padding: 3px 5px;
+                min-height: 32px;
+                max-height: 50px;
+                font-family: 'Roboto', inherit;
+            }
+
+            select[multiple].form-control {
+                height: 50px;
+            }
+
+            /* ── BUTTONS ──────────────────────────────────────────────────────────── */
+            .btn {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                gap: 3px;
+                padding: 3px 8px;
+                font-size: 9px;
+                font-weight: 600;
+                border-radius: 3px;
+                border: 1px solid transparent;
+                cursor: pointer;
+                transition: all .2s;
+                white-space: nowrap;
+                background: #f8f9fa;
+                color: #202124;
+                font-family: 'Roboto', inherit;
+            }
+
+                .btn:hover {
+                    background: #f0f2f5;
+                    box-shadow: 0 1px 3px rgba(0,0,0,.12);
+                }
+
+            .btn-primary {
+                background: #1a73e8;
+                color: #fff;
+                border-color: #1a73e8;
+            }
+
+                .btn-primary:hover {
+                    background: #1557b0;
+                }
+
+            .btn-success {
+                background: #34a853;
+                color: #fff;
+                border-color: #34a853;
+            }
+
+                .btn-success:hover {
+                    background: #2d8e47;
+                }
+
+            .btn-outline-primary {
+                background: #fff;
+                color: #1a73e8;
+                border-color: #1a73e8;
+            }
+
+                .btn-outline-primary:hover {
+                    background: #f8f9fa;
+                }
+
+            .btn-outline-secondary {
+                background: #fff;
+                color: #5f6368;
+                border-color: #dadce0;
+            }
+
+                .btn-outline-secondary:hover {
+                    background: #f8f9fa;
+                }
+
+            .btn-light {
+                background: #fff;
+                color: #1a73e8;
+                border-color: #dadce0;
+            }
+
+                .btn-light:hover {
+                    background: #f8f9fa;
+                }
+
+            .btn-group {
+                display: flex;
+                gap: 0;
+                width: 100%;
+            }
+
+                .btn-group .btn {
+                    flex: 1;
+                    border-radius: 0;
+                }
+
+                    .btn-group .btn:first-child {
+                        border-radius: 3px 0 0 3px;
+                    }
+
+                    .btn-group .btn:last-child {
+                        border-radius: 0 3px 3px 0;
+                    }
+
+                    .btn-group .btn:not(:last-child) {
+                        border-right: none;
+                    }
+
+            .btn-group-sm .btn {
+                padding: 2px 5px;
+                font-size: 8px;
+            }
+
+            /* ── SUB-CARDS (pickup/delivery/collection) ───────────────────────────── */
+            .delivery-row {
+                display: grid;
+                grid-template-columns: 1fr 1fr 1fr;
+                gap: 2px;
+            }
+
+            .delivery-col {
+                min-width: 0;
+            }
+
+            .sub-card {
+                border: 1px solid #dadce0;
+                border-radius: 4px;
+                overflow: hidden;
+                background: #fff;
+                display: flex;
+                flex-direction: column;
+                box-shadow: 0 1px 3px rgba(0,0,0,.08);
+            }
+
+            .sub-card-header {
+                padding: 4px 8px;
+                font-size: 10px;
+                font-weight: 700;
+                color: #fff;
+                display: flex;
+                align-items: center;
+                gap: 4px;
+                flex-shrink: 0;
+                letter-spacing: 0.2px;
+            }
+
+            .bg-pickup {
+                background: linear-gradient(135deg, #34a853 0%, #2d8e47 100%);
+            }
+
+            .bg-delivery {
+                background: linear-gradient(135deg, #4285f4 0%, #1a73e8 100%);
+            }
+
+            .bg-collection {
+                background: linear-gradient(135deg, #fbbc04 0%, #f57c00 100%);
+            }
+
+            .sub-card-body {
+                padding: 4px 6px;
+                flex: 1;
+                overflow-y: auto;
+            }
+
+                .sub-card-body .form-group {
+                    flex-direction: column;
+                    gap: 1px;
+                    align-items: flex-start;
+                    margin-bottom: 2px;
+                }
+
+                    .sub-card-body .form-group label {
+                        max-width: none;
+                        font-size: 10px;
+                    }
+
+                .sub-card-body .form-control,
+                .sub-card-body .form-select {
+                    width: 100%;
+                    flex: none;
+                }
+
+            /* ── TABLES ───────────────────────────────────────────────────────────── */
+            .table-responsive {
+                overflow-x: auto;
+                margin: 0;
+            }
+
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                font-size: 9px;
+            }
+
+                table th, table td {
+                    padding: 3px 4px;
+                    border: 1px solid #dadce0;
+                    vertical-align: middle;
+                }
+
+                table thead th {
+                    background: #f8f9fa;
+                    font-weight: 700;
+                    color: #1a73e8;
+                    white-space: nowrap;
+                }
+
+                table tbody tr:hover {
+                    background: #f8f9fa;
+                }
+
+                table td select, table td input {
+                    height: 22px;
+                    font-size: 9px;
+                    padding: 2px 4px;
+                    width: 100%;
+                }
+
+            /* ── FOOTER ACTIONS ───────────────────────────────────────────────────── */
+            .rot-footer {
+                flex: 0 0 auto;
+                display: flex;
+                align-items: center;
+                justify-content: flex-end;
+                gap: 5px;
+                padding: 6px 12px;
+                background: #fff;
+                border-top: 1px solid #dadce0;
+                box-shadow: 0 -2px 8px rgba(0,0,0,.08);
+                z-index: 10;
+                height: 42px;
+            }
+
+                .rot-footer .btn {
+                    padding: 5px 12px;
+                    font-size: 10px;
+                }
+
+            /* ── REMARKS AREA ─────────────────────────────────────────────────────── */
+            .remarks-row {
+                padding: 4px 6px;
+                background: #f8f9fa;
+                border-top: 1px solid #dadce0;
+                margin-top: 2px;
+                border-radius: 0 0 4px 4px;
+            }
+
+                .remarks-row .form-group {
+                    flex-direction: column;
+                    gap: 2px;
+                    align-items: flex-start;
+                }
+
+                .remarks-row label {
+                    font-size: 10px;
+                    font-weight: 600;
+                }
+
+                .remarks-row textarea {
+                    font-size: 10px;
+                    resize: none;
+                    width: 100%;
+                    font-family: 'Roboto', inherit;
+                }
+
+            /* ── UTILITY CLASSES ──────────────────────────────────────────────────── */
+            .text-center {
+                text-align: center;
+            }
+
+            .text-muted {
+                color: #5f6368;
+            }
+
+            .text-success {
+                color: #34a853;
+            }
+
+            .text-danger {
+                color: #d32f2f;
+            }
+
+            .text-info {
+                color: #4285f4;
+            }
+
+            .py-2 {
+                padding-top: 2px;
+                padding-bottom: 2px;
+            }
+
+            .d-block {
+                display: block;
+            }
+
+            .d-flex {
+                display: flex;
+            }
+
+            .w-100 {
+                width: 100%;
+            }
+
+            .action-icon {
+                cursor: pointer;
+                font-size: 10px;
+                opacity: 0.75;
+                transition: opacity .2s;
+            }
+
+                .action-icon:hover {
+                    opacity: 1;
+                }
+
+            /* ── RESPONSIVE ADJUSTMENTS ───────────────────────────────────────────── */
+            @@media (max-width: 1400px) {
+                .form-group {
+                    min-width: 130px;
+                }
+            
+                .delivery-row {
+                    grid-template-columns: 1fr 1fr 1fr;
+                }
+            }
+
+            @@media (max-width: 1200px) {
+                .form-group {
+                    min-width: 120px;
+                }
+            }
+    </style>
+</head>
+<body>
+
+    <div class="rot-shell">
+        <!-- ① TOP HEADER -->
+        <header class="main-header">
+            <h1><i class="fas fa-truck-fast"></i> Request of Transport Order Management</h1>
+            <div class="header-info">
+                <div><i class="far fa-calendar-alt"></i> 2024-04-24 11:25</div>
+                <div><i class="far fa-user"></i> Admin</div>
+            </div>
+        </header>
+
+        <!-- ② MAIN CONTENT - ALL SECTIONS STACKED -->
+        <div class="rot-content">
+
+            <!-- SECTION 1 — GENERAL INFORMATION -->
+            <div class="section-block">
+                <div class="section-title">
+                    <i class="fas fa-info-circle"></i> General Information
+                </div>
+                <div class="section-body">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>ROT Number <span class="required-star">*</span></label>
+                            <input type="text" class="form-control" value="ROT-2024-001" readonly />
+                        </div>
+                        <div class="form-group">
+                            <label>Delivery Date</label>
+                            <input type="datetime-local" class="form-control" value="2024-04-24T11:25" />
+                        </div>
+                        <div class="form-group">
+                            <label>Business Type</label>
+                            <input type="text" class="form-control" value="HAULAGE-HAULAGE" readonly />
+                        </div>
+                        <div class="form-group">
+                            <label>Job Type <span class="required-star">*</span></label>
+                            <select class="form-select">
+                                <option>Select Job Type</option>
+                                <option>EXPORT</option>
+                                <option>IMPORT</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Job Process <span class="required-star">*</span></label>
+                            <select class="form-select">
+                                <option>ROUND TRIP</option>
+                                <option>ONE WAY</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Service Type <span class="required-star">*</span></label>
+                            <select class="form-select">
+                                <option>Select Service Type</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Commodity</label>
+                            <input type="text" class="form-control" placeholder="Search" />
+                        </div>
+                        <div class="form-group">
+                            <label>Branch</label>
+                            <input type="text" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label>Sub Branch</label>
+                            <select class="form-select">
+                                <option>Select Sub Unit</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Tariff Surcharge</label>
+                            <select class="form-select" multiple style="height:50px;">
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION 2 — BILLING INFORMATION -->
+            <div class="section-block">
+                <div class="section-title">
+                    <i class="fas fa-credit-card"></i> Billing Information
+                </div>
+                <div class="section-body">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Bill To <span class="required-star">*</span></label>
+                            <input type="text" class="form-control" value="SINGLE GLORY SDN BHD" />
+                        </div>
+                        <div class="form-group">
+                            <label>Contact Person</label>
+                            <input type="text" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label>Phone Number</label>
+                            <input type="text" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label>Base Tariff</label>
+                            <select class="form-select">
+                                <option>Select Tariff</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Tariff Location</label>
+                            <select class="form-select">
+                                <option>Select Location</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group full-width">
+                            <label>Billing Address</label>
+                            <textarea class="form-control" style="min-height:32px;">TBA</textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION 3 — TRANSPORT PARTIES INFORMATION -->
+            <div class="section-block">
+                <div class="section-title">
+                    <i class="fas fa-users"></i> Transport Parties Information
+                </div>
+                <div class="section-body">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Booking Party <span class="required-star">*</span></label>
+                            <input type="text" class="form-control" placeholder="Ref No." />
+                        </div>
+                        <div class="form-group">
+                            <label>Shipper/Consignee</label>
+                            <input type="text" class="form-control" placeholder="Ref No." />
+                        </div>
+                        <div class="form-group">
+                            <label>Routing Party</label>
+                            <input type="text" class="form-control" placeholder="Ref No." />
+                        </div>
+                        <div class="form-group">
+                            <label>Forwarding Agent</label>
+                            <input type="text" class="form-control" placeholder="Ref No." />
+                        </div>
+                        <div class="form-group">
+                            <label>Shipping Agent</label>
+                            <input type="text" class="form-control" placeholder="Ref No." />
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Load Port <span class="required-star">*</span></label>
+                            <input type="text" class="form-control" placeholder="Search" />
+                        </div>
+                        <div class="form-group">
+                            <label>Discharge Port</label>
+                            <input type="text" class="form-control" placeholder="Search" />
+                        </div>
+                        <div class="form-group">
+                            <label>Terminal Name <span class="required-star">*</span></label>
+                            <input type="text" class="form-control" placeholder="Search" />
+                        </div>
+                        <div class="form-group">
+                            <label>Vessel Name</label>
+                            <input type="text" class="form-control" placeholder="Search" />
+                        </div>
+                        <div class="form-group">
+                            <label>Closing Date Time</label>
+                            <input type="datetime-local" class="form-control" value="2024-04-24T11:25" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION 4 — DELIVERY & COLLECTION INFORMATION -->
+            <div class="section-block">
+                <div class="section-title">
+                    <i class="fas fa-map-location-dot"></i> Delivery & Collection Information
+                </div>
+                <div class="section-body">
+                    <div class="delivery-row">
+                        <div class="delivery-col">
+                            <div class="sub-card">
+                                <div class="sub-card-header bg-pickup">
+                                    <i class="fas fa-box-open"></i> Pick Up
+                                </div>
+                                <div class="sub-card-body">
+                                    <div class="form-group">
+                                        <label>Pick Up From <span class="required-star">*</span></label>
+                                        <input type="text" class="form-control" placeholder="Search" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Pick Up Address</label>
+                                        <textarea class="form-control" style="min-height:32px;"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="delivery-col">
+                            <div class="sub-card">
+                                <div class="sub-card-header bg-delivery">
+                                    <i class="fas fa-truck-ramp-box"></i> Delivery
+                                </div>
+                                <div class="sub-card-body">
+                                    <div class="form-group">
+                                        <label>Deliver To <span class="required-star">*</span></label>
+                                        <input type="text" class="form-control" value="SINGLE GLORY SDN BHD" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Delivery Address</label>
+                                        <textarea class="form-control" style="min-height:32px;">TBA</textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="delivery-col">
+                            <div class="sub-card">
+                                <div class="sub-card-header bg-collection">
+                                    <i class="fas fa-warehouse"></i> Collection
+                                </div>
+                                <div class="sub-card-body">
+                                    <div class="form-group">
+                                        <label>Collection Return To <span class="required-star">*</span></label>
+                                        <input type="text" class="form-control" placeholder="Search" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Collection Address</label>
+                                        <textarea class="form-control" style="min-height:32px;"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION 5 — REQUIRED QUANTITY -->
+            <div class="section-block">
+                <div class="section-title">
+                    <i class="fas fa-list-check"></i> Required Quantity
+                </div>
+                <div class="section-body">
+                    <div style="display:flex; gap:4px; margin-bottom:4px;">
+                        <button class="btn btn-light"><i class="fas fa-file-download"></i> Sample</button>
+                        <button class="btn btn-success"><i class="fas fa-file-excel"></i> Upload</button>
+                    </div>
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>SL</th>
+                                    <th>Size</th>
+                                    <th>Type</th>
+                                    <th>Weight</th>
+                                    <th>Qty</th>
+                                    <th>Delivery Required</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="text-center">1</td>
+                                    <td><select class="form-select"><option>Select</option></select></td>
+                                    <td><select class="form-select"><option>Select</option></select></td>
+                                    <td><input type="text" class="form-control" value="0" /></td>
+                                    <td><input type="text" class="form-control" value="1" /></td>
+                                    <td>
+                                        <div class="btn-group btn-group-sm w-100">
+                                            <button class="btn btn-primary">DateTime</button>
+                                            <button class="btn btn-outline-secondary">TBA</button>
+                                        </div>
+                                    </td>
+                                    <td class="text-center">
+                                        <i class="fas fa-save text-success action-icon"></i>
+                                        <i class="fas fa-trash-alt text-danger action-icon" style="margin-left:3px;"></i>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION 6 — CONTAINER DETAILS -->
+            <div class="section-block">
+                <div class="section-title">
+                    <i class="fas fa-boxes-stacked"></i> Container Details
+                </div>
+                <div class="section-body">
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>SL</th>
+                                    <th>Container No.</th>
+                                    <th>Seal No.</th>
+                                    <th>Size</th>
+                                    <th>Type</th>
+                                    <th>Weight</th>
+                                    <th>Temp</th>
+                                    <th>Handling</th>
+                                    <th>Service</th>
+                                    <th>Gate Pass</th>
+                                    <th>Remark</th>
+                                    <th>Remove</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td colspan="12" class="text-center text-muted py-2">
+                                        <i class="fas fa-folder-open d-block" style="font-size:13px; margin-bottom:2px;"></i>
+                                        No container details added yet.
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="remarks-row">
+                        <div class="form-group">
+                            <label>General Remarks</label>
+                            <textarea class="form-control" placeholder="Enter remarks..." style="min-height:28px;"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ③ FOOTER ACTIONS -->
+        <footer class="rot-footer">
+            <button class="btn btn-outline-secondary"><i class="fas fa-times"></i> Cancel</button>
+            <button class="btn btn-success"><i class="fas fa-save"></i> Save ROT Draft</button>
+            <button class="btn btn-primary"><i class="fas fa-paper-plane"></i> Save & Process CN</button>
+        </footer>
+
+    </div>
+    @section Scripts {
+        <!-- Select2 CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+        <!-- jQuery UI CSS -->
+        <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css" />
+
+        <!-- jQuery UI -->
+        <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+
+        <!-- Select2 -->
+        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+        <script src="~/js/rot/create.js"></script>
+    }
+</body>
+</html> *@

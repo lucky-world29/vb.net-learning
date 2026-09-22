@@ -1,0 +1,15 @@
+D:\C#\csharp-learning-library\Visual_Basic_Practice\Visual_Basic_Practice\obj\Debug\net10.0\Visual_Basic_Practice.GeneratedMSBuildEditorConfig.editorconfig
+D:\C#\csharp-learning-library\Visual_Basic_Practice\Visual_Basic_Practice\obj\Debug\net10.0\Visual_Basic_Practice.AssemblyInfoInputs.cache
+D:\C#\csharp-learning-library\Visual_Basic_Practice\Visual_Basic_Practice\obj\Debug\net10.0\Visual_Basic_Practice.AssemblyInfo.vb
+D:\C#\csharp-learning-library\Visual_Basic_Practice\Visual_Basic_Practice\obj\Debug\net10.0\Visual_Basic_Practice.vbproj.CoreCompileInputs.cache
+D:\C#\csharp-learning-library\Visual_Basic_Practice\Visual_Basic_Practice\obj\Debug\net10.0\Visual_Basic_Practice.sourcelink.json
+D:\C#\csharp-learning-library\Visual_Basic_Practice\Visual_Basic_Practice\bin\Debug\net10.0\Visual_Basic_Practice.exe
+D:\C#\csharp-learning-library\Visual_Basic_Practice\Visual_Basic_Practice\bin\Debug\net10.0\Visual_Basic_Practice.deps.json
+D:\C#\csharp-learning-library\Visual_Basic_Practice\Visual_Basic_Practice\bin\Debug\net10.0\Visual_Basic_Practice.runtimeconfig.json
+D:\C#\csharp-learning-library\Visual_Basic_Practice\Visual_Basic_Practice\bin\Debug\net10.0\Visual_Basic_Practice.dll
+D:\C#\csharp-learning-library\Visual_Basic_Practice\Visual_Basic_Practice\bin\Debug\net10.0\Visual_Basic_Practice.pdb
+D:\C#\csharp-learning-library\Visual_Basic_Practice\Visual_Basic_Practice\obj\Debug\net10.0\Visual_Basic_Practice.dll
+D:\C#\csharp-learning-library\Visual_Basic_Practice\Visual_Basic_Practice\obj\Debug\net10.0\refint\Visual_Basic_Practice.dll
+D:\C#\csharp-learning-library\Visual_Basic_Practice\Visual_Basic_Practice\obj\Debug\net10.0\Visual_Basic_Practice.pdb
+D:\C#\csharp-learning-library\Visual_Basic_Practice\Visual_Basic_Practice\obj\Debug\net10.0\Visual_Basic_Practice.genruntimeconfig.cache
+D:\C#\csharp-learning-library\Visual_Basic_Practice\Visual_Basic_Practice\obj\Debug\net10.0\ref\Visual_Basic_Practice.dll

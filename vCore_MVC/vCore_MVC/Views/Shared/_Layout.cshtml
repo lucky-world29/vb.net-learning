@@ -1,0 +1,810 @@
+﻿
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>vCORE - Professional Dashboard</title>
+    
+       <!-- Bootstrap 5 -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Tailwind -->
+@* <script src="https://cdn.tailwindcss.com"></script> *@
+
+<!-- DataTables CSS -->
+<link rel="stylesheet"
+      href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" />
+
+<!-- DataTables Buttons CSS -->
+<link rel="stylesheet"
+      href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.bootstrap5.min.css" />
+
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+<!-- Animate.css -->
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet">
+        <link rel="icon" href="~/GussNewIco.ico" type="image/x-icon">
+        <style>
+            :root {
+                --sidebar-width: 320px;
+                --sidebar-collapsed-width: 70px;
+                --sidebar-bg: #111827;
+                --sidebar-hover: #1f2937;
+                --accent-color: #3b82f6;
+                --text-muted: #9ca3af;
+                --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            }
+
+            body {
+                font-family: 'Inter', sans-serif;
+                background-color: #f3f4f6;
+                color: #111827;
+                overflow-x: hidden;
+            }
+
+            /* Sidebar Styling */
+            #sidebar {
+                width: var(--sidebar-width);
+                height: 100vh;
+                background: var(--sidebar-bg);
+                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                position: fixed;
+                z-index: 1000;
+                overflow-y: auto;
+                overflow-x: hidden;
+            }
+
+            #sidebar.collapsed {
+                width: var(--sidebar-collapsed-width);
+            }
+
+            #sidebar.collapsed .menu-text, 
+            #sidebar.collapsed .arrow,
+            #sidebar.collapsed #menuSearchContainer {
+                display: none !important;
+            }
+
+            #sidebar.collapsed .nav-link {
+                text-align: center;
+                padding: 12px 0;
+                justify-content: center;
+            }
+
+            #sidebar.collapsed .nav-link i {
+                margin: 0 !important;
+                font-size: 1.2rem;
+            }
+
+            .sidebar-header {
+                padding: 1.25rem;
+                border-bottom: 1px solid rgba(255,255,255,0.05);
+                background: rgba(0,0,0,0.2);
+            }
+
+            .nav-link {
+                color: var(--text-muted);
+                padding: 0.6rem 1rem;
+                margin: 0.1rem 0.75rem;
+                border-radius: 0.375rem;
+                transition: all 0.2s;
+                display: flex;
+                align-items: center;
+                font-weight: 500;
+                font-size: 0.875rem;
+                text-decoration: none;
+            }
+
+            .nav-link:hover {
+                background-color: var(--sidebar-hover);
+                color: white;
+            }
+
+            .nav-link.active {
+                background-color: var(--accent-color);
+                color: white;
+            }
+
+            .submenu .nav-link {
+                font-size: 0.8rem;
+                margin-left: 1.5rem;
+            }
+
+            .submenu .submenu .nav-link {
+                margin-left: 2.5rem;
+            }
+
+            .arrow {
+                transition: transform 0.3s ease;
+                font-size: 0.75rem;
+            }
+
+            a[aria-expanded="true"] .arrow {
+                transform: rotate(180deg);
+            }
+
+            .menu-highlight {
+                background-color: #fbbf24;
+                color: #000;
+                font-weight: bold;
+                padding: 0 2px;
+                border-radius: 2px;
+            }
+
+            /* Main Content Area */
+            #main-content {
+          margin-left: var(--sidebar-width);
+        width: calc(100% - var(--sidebar-width));   
+
+                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+           
+                min-height: 100vh;
+            }
+
+            #sidebar.collapsed + #main-content {
+                margin-left: var(--sidebar-collapsed-width);
+                width: calc(100% - var(--sidebar-collapsed-width));
+            }
+
+            /* Flyout Menu */
+            #flyoutMenu {
+                position: fixed;
+                left: 75px;
+                background: #1f2937;
+                color: white;
+                padding: 12px 20px;
+                border-radius: 0 8px 8px 0;
+                box-shadow: 10px 0 30px rgba(0,0,0,0.3);
+                display: none;
+                z-index: 9999;
+                border-left: 4px solid var(--accent-color);
+                font-weight: 600;
+                white-space: nowrap;
+            }
+
+            /* Dashboard Elements */
+            .stat-card {
+                background: white;
+                border: none;
+                border-radius: 0.75rem;
+                padding: 1.25rem;
+                box-shadow: var(--card-shadow);
+                transition: transform 0.2s;
+            }
+
+            .stat-card:hover { transform: translateY(-3px); }
+
+            .icon-box {
+                width: 40px;
+                height: 40px;
+                border-radius: 0.5rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 1.1rem;
+                margin-bottom: 0.75rem;
+            }
+            .animated-name {
+    background: linear-gradient(90deg, #3b82f6, #9333ea, #3b82f6);
+    background-size: 200% auto;
+    color: transparent;
+    -webkit-background-clip: text;
+    animation: shine 3s linear infinite;
+}
+
+@@keyframes shine {
+    to {
+        background-position: 200% center;
+    }
+}
+            /* Scrollbar */
+            #sidebar::-webkit-scrollbar { width: 4px; }
+            #sidebar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
+
+            /* ACTIVE LINK */
+.nav-link.active {
+    background-color: #3b82f6 !important;
+    color: #fff !important;
+    font-weight: 600;
+}
+
+/* PARENT ACTIVE (SUB MENU OPEN) */
+.submenu.show {
+    display: block !important;
+}
+
+/* ARROW ROTATION */
+.arrow.rotate {
+    transform: rotate(180deg);
+}
+        </style>
+
+    </head>
+    <body>
+
+        <div class="d-flex" id="wrapper">
+            <!-- Sidebar -->
+            <nav id="sidebar" class="text-white">
+                <div class="sidebar-header d-flex align-items-center justify-content-between">
+                    <div class="d-flex align-items-center menu-text">
+                        <div class="bg-primary rounded p-1 me-2">
+                            <i class="fas fa-cube text-white"></i>
+                        </div>
+                        <span class="fw-bold fs-5 tracking-tight">vCORE</span>
+                    </div>
+                    <button class="btn btn-sm btn-outline-light border-0" id="menu-toggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+
+                <div class="px-3 my-3" id="menuSearchContainer">
+                    <div class="input-group input-group-sm bg-dark rounded border-0">
+                        <span class="input-group-text bg-transparent border-0 text-muted"><i class="fas fa-search"></i></span>
+                        <input type="text" id="menuSearch" class="form-control bg-transparent border-0 text-white shadow-none" placeholder="Search menu...">
+                    </div>
+                </div>
+
+                <ul class="nav flex-column pb-5" id="menuList">
+                    <!-- Home -->
+                    <li class="nav-item">
+                        <a href="/Home/Index" class="nav-link active" title="Home">
+                            <i class="fas fa-home me-3"></i>
+                            <span class="menu-text">Home</span>
+                        </a>
+                    </li>
+
+                    <!-- ADMINISTRATION -->
+                    <li class="nav-item">
+                        <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#AdminstrationMenu">
+                            <span>
+                                <i class="fas fa-cogs me-3"></i>
+                                <span class="menu-text">ADMINISTRATION</span>
+                            </span>
+                            <i class="fas fa-chevron-down arrow menu-text"></i>
+                        </a>
+                        <div class="collapse submenu" id="AdminstrationMenu">
+                            <!-- User Management -->
+                            <a href="#UserManagementMenu" data-bs-toggle="collapse" class="nav-link d-flex justify-content-between align-items-center">
+                                <span><i class="fas fa-user-cog me-2"></i><span class="menu-text">User Management</span></span>
+                                <i class="fas fa-chevron-down arrow menu-text"></i>
+                            </a>
+                            <div class="collapse submenu" id="UserManagementMenu">
+                                <a href="/Administration/UserRole" class="nav-link"><i class="fas fa-id-badge me-2"></i><span class="menu-text">User Role</span></a>
+                                <a href="/Administration/Users" class="nav-link"><i class="fas fa-users me-2"></i><span class="menu-text">Users</span></a>
+                                <a href="/Administration/UserOrganisation" class="nav-link"><i class="fas fa-building me-2"></i><span class="menu-text">User Organisation</span></a>
+                            </div>
+
+                            <!-- Site Settings -->
+                            <a href="#SiteSettingMenu" data-bs-toggle="collapse" class="nav-link d-flex justify-content-between align-items-center">
+                                <span><i class="fas fa-cog me-2"></i><span class="menu-text">Site Settings</span></span>
+                                <i class="fas fa-chevron-down arrow menu-text"></i>
+                            </a>
+                            <div class="collapse submenu" id="SiteSettingMenu">
+                                <a href="#" class="nav-link"><i class="fas fa-user-lock me-2"></i><span class="menu-text">Page Access By Role</span></a>
+                                <a href="#" class="nav-link"><i class="fas fa-chart-bar me-2"></i><span class="menu-text">Report Access</span></a>
+                                <a href="#" class="nav-link"><i class="fas fa-plus-square me-2"></i><span class="menu-text">Additional Fields</span></a>
+                                <a href="#" class="nav-link"><i class="fas fa-upload me-2"></i><span class="menu-text">Upload Data</span></a>
+                                <a href="#" class="nav-link"><i class="fas fa-sliders-h me-2"></i><span class="menu-text">Format Settings</span></a>
+                                <a href="#" class="nav-link"><i class="fas fa-user-check me-2"></i><span class="menu-text">Page Access By User</span></a>
+                                <a href="#" class="nav-link"><i class="fas fa-comments me-2"></i><span class="menu-text">Remarks Categories</span></a>
+                                <a href="#" class="nav-link"><i class="fas fa-comment-dots me-2"></i><span class="menu-text">Remarks Master</span></a>
+                            </div>
+
+                            <!-- Organisation Master -->
+                            <a href="#OrganistaionMasterMenu" data-bs-toggle="collapse" class="nav-link d-flex justify-content-between align-items-center">
+                                <span><i class="fas fa-sitemap me-2"></i><span class="menu-text">Organisation Master</span></span>
+                                <i class="fas fa-chevron-down arrow menu-text"></i>
+                            </a>
+                            <div class="collapse submenu" id="OrganistaionMasterMenu">
+                                <a href="#" class="nav-link"><i class="fas fa-building me-2"></i><span class="menu-text">Organisation Mgmt</span></a>
+                                <a href="/OrganisationMaster/Branch" class="nav-link"><i class="fas fa-code-branch me-2"></i><span class="menu-text">Branch</span></a>
+                                <a href="/OrganisationMaster/BranchSubUnit" class="nav-link"><i class="fas fa-code-branch me-2"></i><span class="menu-text">Branch Sub Unit</span></a>
+                                <a href="#" class="nav-link"><i class="fas fa-briefcase me-2"></i><span class="menu-text">Business Type</span></a>
+                                <a href="#" class="nav-link"><i class="fas fa-concierge-bell me-2"></i><span class="menu-text">Service Type</span></a>
+                            </div>
+
+                            <!-- Operation Management -->
+                            <a href="#OperationManagementMenu" data-bs-toggle="collapse" class="nav-link d-flex justify-content-between align-items-center">
+                                <span><i class="fas fa-tasks me-2"></i><span class="menu-text">Operation Management</span></span>
+                                <i class="fas fa-chevron-down arrow menu-text"></i>
+                            </a>
+                            <div class="collapse submenu" id="OperationManagementMenu">
+                                <a href="#" class="nav-link"><i class="fas fa-arrows-rotate me-2"></i><span class="menu-text">Job Process Type</span></a>
+                                <a href="#" class="nav-link"><i class="fas fa-code me-2"></i><span class="menu-text">MDT Function Codes</span></a>
+                                <a href="#" class="nav-link"><i class="fas fa-anchor me-2"></i><span class="menu-text">Ports</span></a>
+                                <a href="#" class="nav-link"><i class="fas fa-dolly me-2"></i><span class="menu-text">Container Operations</span></a>
+                                <a href="#" class="nav-link"><i class="fas fa-file-alt me-2"></i><span class="menu-text">Documents</span></a>
+                                <a href="#" class="nav-link"><i class="fas fa-map-location-dot me-2"></i><span class="menu-text">Port Bases</span></a>
+                            </div>
+
+                            <!-- Equipment Management -->
+                            <a href="#EquipmentManagementMenu" data-bs-toggle="collapse" class="nav-link d-flex justify-content-between align-items-center">
+                                <span><i class="fas fa-tools me-2"></i><span class="menu-text">Equipment Management</span></span>
+                                <i class="fas fa-chevron-down arrow menu-text"></i>
+                            </a>
+                            <div class="collapse submenu" id="EquipmentManagementMenu">
+                                <a href="#" class="nav-link"><i class="fas fa-truck-moving me-2"></i><span class="menu-text">Prime Movers</span></a>
+                                <a href="#" class="nav-link"><i class="fas fa-trailer me-2"></i><span class="menu-text">Trailers</span></a>
+                                <a href="#" class="nav-link"><i class="fas fa-cubes me-2"></i><span class="menu-text">Container Types</span></a>
+                                <a href="#" class="nav-link"><i class="fas fa-layer-group me-2"></i><span class="menu-text">Truck Types</span></a>
+                                <a href="#" class="nav-link"><i class="fas fa-ruler-combined me-2"></i><span class="menu-text">Container Sizes</span></a>
+                                <a href="#" class="nav-link"><i class="fas fa-balance-scale me-2"></i><span class="menu-text">Capacity Types</span></a>
+                                <a href="#" class="nav-link"><i class="fas fa-clipboard-check me-2"></i><span class="menu-text">PTI Category Master</span></a>
+                                <a href="#" class="nav-link"><i class="fas fa-sliders-h me-2"></i><span class="menu-text">PTI Category DET MG</span></a>
+                            </div>
+
+                            <!-- Tariff Management -->
+                            <a href="#TariffManagementMenu" data-bs-toggle="collapse" class="nav-link d-flex justify-content-between align-items-center">
+                                <span><i class="fas fa-money-bill-wave me-2"></i><span class="menu-text">Tariff Management</span></span>
+                                <i class="fas fa-chevron-down arrow menu-text"></i>
+                            </a>
+                            <div class="collapse submenu" id="TariffManagementMenu">
+                                <a href="#" class="nav-link"><i class="fas fa-map me-2"></i><span class="menu-text">Areas</span></a>
+                                <a href="#" class="nav-link"><i class="fas fa-map-marked-alt me-2"></i><span class="menu-text">States</span></a>
+                                <a href="#" class="nav-link"><i class="fas fa-globe-asia me-2"></i><span class="menu-text">Countries</span></a>
+                                <a href="#" class="nav-link"><i class="fas fa-draw-polygon me-2"></i><span class="menu-text">Zones</span></a>
+                                <a href="#" class="nav-link"><i class="fas fa-money-bill-wave me-2"></i><span class="menu-text">Tariff Base</span></a>
+                                <a href="#" class="nav-link"><i class="fas fa-map-marker-alt me-2"></i><span class="menu-text">Tariff Location</span></a>
+                                <a href="#" class="nav-link"><i class="fas fa-gas-pump me-2"></i><span class="menu-text">Global FAF</span></a>
+                            </div>
+
+                            <!-- Commodity Management -->
+                            <a href="#CommodityManagementMenu" data-bs-toggle="collapse" class="nav-link d-flex justify-content-between align-items-center">
+                                <span><i class="fas fa-boxes me-2"></i><span class="menu-text">Commodity Management</span></span>
+                                <i class="fas fa-chevron-down arrow menu-text"></i>
+                            </a>
+                            <div class="collapse submenu" id="CommodityManagementMenu">
+                                <a href="#" class="nav-link"><i class="fas fa-warehouse me-2"></i><span class="menu-text">Commodities</span></a>
+                                <a href="#" class="nav-link"><i class="fas fa-hand-holding me-2"></i><span class="menu-text">Special Handling</span></a>
+                                <a href="#" class="nav-link"><i class="fas fa-star me-2"></i><span class="menu-text">Special Services</span></a>
+                            </div>
+
+                            <!-- Driver Management -->
+                            <a href="#DriverManagementMenu" data-bs-toggle="collapse" class="nav-link d-flex justify-content-between align-items-center">
+                                <span><i class="fas fa-truck me-2"></i><span class="menu-text">Driver Management</span></span>
+                                <i class="fas fa-chevron-down arrow menu-text"></i>
+                            </a>
+                            <div class="collapse submenu" id="DriverManagementMenu">
+                                <a href="#" class="nav-link"><i class="fas fa-id-badge me-2"></i><span class="menu-text">Drivers</span></a>
+                                <a href="#" class="nav-link"><i class="fas fa-file-invoice-dollar me-2"></i><span class="menu-text">Driver Expenses</span></a>
+                                <a href="#" class="nav-link"><i class="fas fa-hand-holding-usd me-2"></i><span class="menu-text">Allowance Assignment</span></a>
+                                <a href="#" class="nav-link"><i class="fas fa-bed me-2"></i><span class="menu-text">Rest Time Info</span></a>
+                                <a href="#" class="nav-link"><i class="fas fa-undo me-2"></i><span class="menu-text">Return To Base</span></a>
+                                <a href="#" class="nav-link"><i class="fas fa-hand-holding-usd me-2"></i><span class="menu-text">Driver Allowances</span></a>
+                                <a href="#" class="nav-link"><i class="fas fa-hand-holding me-2"></i><span class="menu-text">Driver Advance</span></a>
+                                <a href="#" class="nav-link"><i class="fas fa-calculator me-2"></i><span class="menu-text">Driver Deduction</span></a>
+                                <a href="#" class="nav-link"><i class="fas fa-user-tag me-2"></i><span class="menu-text">Driver Types</span></a>
+                            </div>
+
+                            <!-- HR -->
+                            <a href="#HRMenu" data-bs-toggle="collapse" class="nav-link d-flex justify-content-between align-items-center">
+                                <span><i class="fas fa-user-friends me-2"></i><span class="menu-text">HR</span></span>
+                                <i class="fas fa-chevron-down arrow menu-text"></i>
+                            </a>
+                            <div class="collapse submenu" id="HRMenu">
+                                <a href="#" class="nav-link"><i class="fas fa-gift me-2"></i><span class="menu-text">Driver Incentives Reports</span></a>
+                                <a href="#" class="nav-link"><i class="fas fa-coins me-2"></i><span class="menu-text">Driver Incentives Summary Reports</span></a>
+                                <a href="#" class="nav-link"><i class="fas fa-trophy me-2"></i><span class="menu-text">Driver Incentives Master</span></a>
+                                <a href="#" class="nav-link"><i class="fas fa-champagne-glasses me-2"></i><span class="menu-text">Holiday Incentives</span></a>
+                            </div>
+
+                            <!-- Sales -->
+                            <a href="#SalesMenu" data-bs-toggle="collapse" class="nav-link d-flex justify-content-between align-items-center">
+                                <span><i class="fas fa-chart-line me-2"></i><span class="menu-text">Sales</span></span>
+                                <i class="fas fa-chevron-down arrow menu-text"></i>
+                            </a>
+                            <div class="collapse submenu" id="SalesMenu">
+                                <a href="#" class="nav-link"><i class="fas fa-map me-2"></i><span class="menu-text">Tariff Location Rates</span></a>
+                                <a href="#" class="nav-link"><i class="fas fa-clipboard-list me-2"></i><span class="menu-text">HMS Rate Sheet</span></a>
+                                <a href="#" class="nav-link"><i class="fas fa-file-lines me-2"></i><span class="menu-text">RateSheet Overview</span></a>
+                            </div>
+
+                            <!-- Accounts -->
+                            <a href="#AccountsMenu" data-bs-toggle="collapse" class="nav-link d-flex justify-content-between align-items-center">
+                                <span><i class="fas fa-wallet me-2"></i><span class="menu-text">Accounts</span></span>
+                                <i class="fas fa-chevron-down arrow menu-text"></i>
+                            </a>
+                            <div class="collapse submenu" id="AccountsMenu">
+                                <a href="#" class="nav-link"><i class="fas fa-file-invoice me-2"></i><span class="menu-text">Chart Accounts</span></a>
+                                <a href="#" class="nav-link"><i class="fas fa-layer-group me-2"></i><span class="menu-text">Chart of Account Types</span></a>
+                                <a href="#" class="nav-link"><i class="fas fa-users me-2"></i><span class="menu-text">Creditors</span></a>
+                                <a href="#" class="nav-link"><i class="fas fa-users me-2"></i><span class="menu-text">Debtors</span></a>
+                                <a href="#" class="nav-link"><i class="fas fa-circle-plus me-2"></i><span class="menu-text">Tariff Surcharges</span></a>
+                                <a href="#" class="nav-link"><i class="fas fa-coins me-2"></i><span class="menu-text">Charges</span></a>
+                                <a href="#" class="nav-link"><i class="fas fa-building-columns me-2"></i><span class="menu-text">Bank Accounts</span></a>
+                            </div>
+
+                            <!-- LHDN Management -->
+                            <a href="#LHDNManagementMenu" data-bs-toggle="collapse" class="nav-link d-flex justify-content-between align-items-center">
+                                <span><i class="fas fa-landmark me-2"></i><span class="menu-text">LHDN Management</span></span>
+                                <i class="fas fa-chevron-down arrow menu-text"></i>
+                            </a>
+                            <div class="collapse submenu" id="LHDNManagementMenu">
+                                <a href="#" class="nav-link"><i class="fas fa-laptop-file me-2"></i><span class="menu-text">E-Invoice Types</span></a>
+                                <a href="#" class="nav-link"><i class="fas fa-mobile-screen-button me-2"></i><span class="menu-text">Payment Methods</span></a>
+                                <a href="#" class="nav-link"><i class="fas fa-map-location-dot me-2"></i><span class="menu-text">State Codes</span></a>
+                                <a href="#" class="nav-link"><i class="fas fa-percent me-2"></i><span class="menu-text">Tax Types</span></a>
+                                <a href="#" class="nav-link"><i class="fas fa-handshake me-2"></i><span class="menu-text">Supplier Registration</span></a>
+                                <a href="#" class="nav-link"><i class="fas fa-city me-2"></i><span class="menu-text">City Master</span></a>
+                                <a href="#" class="nav-link"><i class="fas fa-percent me-2"></i><span class="menu-text">Tax Rates</span></a>
+                                <a href="#" class="nav-link"><i class="fas fa-industry me-2"></i><span class="menu-text">MSIC Sub-Category Codes</span></a>
+                                <a href="#" class="nav-link"><i class="fas fa-list me-2"></i><span class="menu-text">Unit Types</span></a>
+                                <a href="#" class="nav-link"><i class="fas fa-tags me-2"></i><span class="menu-text">Classification Codes</span></a>
+                                <a href="#" class="nav-link"><i class="fas fa-flag me-2"></i><span class="menu-text">Country Codes</span></a>
+                                <a href="#" class="nav-link"><i class="fas fa-coins me-2"></i><span class="menu-text">Currency Codes</span></a>
+                            </div>
+
+                            <!-- Audit -->
+                            <a href="#AuditMenu" data-bs-toggle="collapse" class="nav-link d-flex justify-content-between align-items-center">
+                                <span><i class="fas fa-clipboard-check me-2"></i><span class="menu-text">Audit</span></span>
+                                <i class="fas fa-chevron-down arrow menu-text"></i>
+                            </a>
+                            <div class="collapse submenu" id="AuditMenu">
+                                <a href="#" class="nav-link"><i class="fas fa-magnifying-glass me-2"></i><span class="menu-text">Audit For Master Pages</span></a>
+                            </div>
+
+                            <!-- Sales And Service Tax -->
+                            <a href="#SalesAndServiceTaxMenu" data-bs-toggle="collapse" class="nav-link d-flex justify-content-between align-items-center">
+                                <span><i class="fas fa-receipt me-2"></i><span class="menu-text">Sales And Service Tax</span></span>
+                                <i class="fas fa-chevron-down arrow menu-text"></i>
+                            </a>
+                            <div class="collapse submenu" id="SalesAndServiceTaxMenu">
+                                <a href="#" class="nav-link"><i class="fas fa-calculator me-2"></i><span class="menu-text">Sales And Service Tax</span></a>
+                                <a href="#" class="nav-link"><i class="fas fa-chart-line me-2"></i><span class="menu-text">Sales And Service Tax Rate</span></a>
+                                <a href="#" class="nav-link"><i class="fas fa-globe me-2"></i><span class="menu-text">Global Tax</span></a>
+                            </div>
+
+                            <!-- Reports -->
+                            <a href="#ReportsMenu" data-bs-toggle="collapse" class="nav-link d-flex justify-content-between align-items-center">
+                                <span><i class="fas fa-chart-bar me-2"></i><span class="menu-text">Reports</span></span>
+                                <i class="fas fa-chevron-down arrow menu-text"></i>
+                            </a>
+                            <div class="collapse submenu" id="ReportsMenu">
+                                <a href="#" class="nav-link"><i class="fas fa-chart-bar me-2"></i><span class="menu-text">Reports</span></a>
+                                <a href="#" class="nav-link"><i class="fas fa-book me-2"></i><span class="menu-text">Reports List</span></a>
+                            </div>
+                        </div>
+                    </li>
+
+                    <!-- HMS -->
+                    <li class="nav-item">
+                        <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#HMSMenu">
+                            <span>
+                                <i class="fas fa-truck-moving me-3"></i>
+                                <span class="menu-text">HMS</span>
+                            </span>
+                            <i class="fas fa-chevron-down arrow menu-text"></i>
+                        </a>
+                        <div class="collapse submenu" id="HMSMenu">
+                            <!-- DashBoard -->
+                            <a href="#DashBoardMenu" data-bs-toggle="collapse" class="nav-link d-flex justify-content-between align-items-center">
+                                <span><i class="fas fa-tachometer-alt me-2"></i><span class="menu-text">DashBoard</span></span>
+                                <i class="fas fa-chevron-down arrow menu-text"></i>
+                            </a>
+                            <div class="collapse submenu" id="DashBoardMenu">
+                                <a href="#" class="nav-link"><i class="fas fa-headset me-2"></i><span class="menu-text">Customer Service Dashboard</span></a>
+                                <a href="#" class="nav-link"><i class="fas fa-brain me-2"></i><span class="menu-text">Dashboard Pro</span></a>
+                                <a href="#" class="nav-link"><i class="fas fa-sack-dollar me-2"></i><span class="menu-text">Revenue Dashboard</span></a>
+                                <a href="#" class="nav-link"><i class="fas fa-calendar-day me-2"></i><span class="menu-text">Daily Dashboard</span></a>
+                            </div>
+
+                            <!-- Customer Services -->
+                            <a href="#CustomerServicesMenu" data-bs-toggle="collapse" class="nav-link d-flex justify-content-between align-items-center">
+                                <span><i class="fas fa-headset me-2"></i><span class="menu-text">Customer Services</span></span>
+                                <i class="fas fa-chevron-down arrow menu-text"></i>
+                            </a>
+                            <div class="collapse submenu" id="CustomerServicesMenu">
+                                <a href="/Rot/Create" class="nav-link"><i class="fas fa-plus-circle me-2"></i><span class="menu-text">ROT Creation</span></a>
+                                <a href="#" class="nav-link"><i class="fas fa-folder-tree me-2"></i><span class="menu-text">ROT Management</span></a>
+                                <a href="#" class="nav-link"><i class="fas fa-boxes-stacked me-2"></i><span class="menu-text">Order Management(CS)</span></a>
+                                <a href="#" class="nav-link"><i class="fas fa-circle-check me-2"></i><span class="menu-text">Job Validation</span></a>
+                                <a href="#" class="nav-link"><i class="fas fa-pen-to-square me-2"></i><span class="menu-text">Batch Edit</span></a>
+                            </div>
+
+                            <!-- Operations -->
+                            <a href="#OperationsMenu" data-bs-toggle="collapse" class="nav-link d-flex justify-content-between align-items-center">
+                                <span><i class="fas fa-project-diagram me-2"></i><span class="menu-text">Operations</span></span>
+                                <i class="fas fa-chevron-down arrow menu-text"></i>
+                            </a>
+                            <div class="collapse submenu" id="OperationsMenu">
+                                <a href="#" class="nav-link"><i class="fas fa-calendar-days me-2"></i><span class="menu-text">Job Planning</span></a>
+                                <a href="#" class="nav-link"><i class="fas fa-desktop me-2"></i><span class="menu-text">Operations Overview</span></a>
+                                <a href="#" class="nav-link"><i class="fas fa-bullhorn me-2"></i><span class="menu-text">Collection Advice</span></a>
+                                <a href="#" class="nav-link"><i class="fas fa-arrow-rotate-left me-2"></i><span class="menu-text">Reverse Job Collection</span></a>
+                                <a href="#" class="nav-link"><i class="fas fa-boxes-stacked me-2"></i><span class="menu-text">Order Management (OPS)</span></a>
+                                <a href="#" class="nav-link"><i class="fas fa-arrow-up-1-9 me-2"></i><span class="menu-text">MDT Job Priority Set</span></a>
+                                <a href="#" class="nav-link"><i class="fas fa-door-open me-2"></i><span class="menu-text">Gate Pass Management</span></a>
+                                <a href="#" class="nav-link"><i class="fas fa-eye me-2"></i><span class="menu-text">PTI View Details</span></a>
+                                <a href="#" class="nav-link"><i class="fas fa-hand me-2"></i><span class="menu-text">Driver Request Jobs</span></a>
+                            </div>
+
+                            <!-- Invoices -->
+                            <a href="#InvoicesMenu" data-bs-toggle="collapse" class="nav-link d-flex justify-content-between align-items-center">
+                                <span><i class="fas fa-file-invoice me-2"></i><span class="menu-text">Invoices</span></span>
+                                <i class="fas fa-chevron-down arrow menu-text"></i>
+                            </a>
+                            <div class="collapse submenu" id="InvoicesMenu">
+                                <a href="#" class="nav-link"><i class="fas fa-file-circle-exclamation me-2"></i><span class="menu-text">Un-Invoice Job Listing</span></a>
+                                <a href="#" class="nav-link"><i class="fas fa-file-invoice-dollar me-2"></i><span class="menu-text">Invoice Management</span></a>
+                                <a href="#" class="nav-link"><i class="fas fa-file-invoice me-2"></i><span class="menu-text">Free Tax Invoice</span></a>
+                                <a href="#" class="nav-link"><i class="fas fa-file-circle-minus me-2"></i><span class="menu-text">Credit Note Management</span></a>
+                                <a href="#" class="nav-link"><i class="fas fa-file-circle-plus me-2"></i><span class="menu-text">Debit Note Management</span></a>
+                                <a href="#" class="nav-link"><i class="fas fa-file-circle-exclamation me-2"></i><span class="menu-text">Non-Invoiced Jobs List</span></a>
+                                <a href="#" class="nav-link"><i class="fas fa-robot me-2"></i><span class="menu-text">Self Billing</span></a>
+                            </div>
+
+                            <!-- LHDN Posting -->
+                            <a href="#LHDNPostingMenu" data-bs-toggle="collapse" class="nav-link d-flex justify-content-between align-items-center">
+                                <span><i class="fas fa-paper-plane me-2"></i><span class="menu-text">LHDN Posting</span></span>
+                                <i class="fas fa-chevron-down arrow menu-text"></i>
+                            </a>
+                            <div class="collapse submenu" id="LHDNPostingMenu">
+                                <a href="#" class="nav-link"><i class="fas fa-circle-check me-2"></i><span class="menu-text">Invoices Posting</span></a>
+                                <a href="#" class="nav-link"><i class="fas fa-hand-holding-dollar me-2"></i><span class="menu-text">Free Invoices Posting</span></a>
+                                <a href="#" class="nav-link"><i class="fas fa-rotate-left me-2"></i><span class="menu-text">Credit Note Posting</span></a>
+                                <a href="#" class="nav-link"><i class="fas fa-file-circle-plus me-2"></i><span class="menu-text">Debit Note Posting</span></a>
+                                <a href="#" class="nav-link"><i class="fas fa-qrcode me-2"></i><span class="menu-text">HMS LHDN QR View</span></a>
+                            </div>
+
+                            <!-- E-Administration -->
+                            <a href="#E-AdministrationMenu" data-bs-toggle="collapse" class="nav-link d-flex justify-content-between align-items-center">
+                                <span><i class="fas fa-user-shield me-2"></i><span class="menu-text">E-Administration</span></span>
+                                <i class="fas fa-chevron-down arrow menu-text"></i>
+                            </a>
+                            <div class="collapse submenu" id="E-AdministrationMenu">
+                                <a href="#" class="nav-link"><i class="fas fa-user-shield me-2"></i><span class="menu-text">E-Admin</span></a>
+                                <a href="#" class="nav-link"><i class="fas fa-bars me-2"></i><span class="menu-text">Options</span></a>
+                                <a href="#" class="nav-link"><i class="fas fa-user-group me-2"></i><span class="menu-text">External E-ROT Users List</span></a>
+                            </div>
+
+                            <!-- JOB Monitor -->
+                            <a href="#JOBMonitorMenu" data-bs-toggle="collapse" class="nav-link d-flex justify-content-between align-items-center">
+                                <span><i class="fas fa-desktop me-2"></i><span class="menu-text">JOB Monitor</span></span>
+                                <i class="fas fa-chevron-down arrow menu-text"></i>
+                            </a>
+                            <div class="collapse submenu" id="JOBMonitorMenu">
+                                <a href="#" class="nav-link"><i class="fas fa-satellite-dish me-2"></i><span class="menu-text">Live CIC</span></a>
+                            </div>
+
+                            <!-- Account Integration -->
+                            <a href="#AccountIntegrationMenu" data-bs-toggle="collapse" class="nav-link d-flex justify-content-between align-items-center">
+                                <span><i class="fas fa-link me-2"></i><span class="menu-text">Account Integration</span></span>
+                                <i class="fas fa-chevron-down arrow menu-text"></i>
+                            </a>
+                            <div class="collapse submenu" id="AccountIntegrationMenu">
+                                <a href="#" class="nav-link"><i class="fas fa-upload me-2"></i><span class="menu-text">Account Posting</span></a>
+                            </div>
+
+                            <!-- 3PL -->
+                            <a href="#3PLMenu" data-bs-toggle="collapse" class="nav-link d-flex justify-content-between align-items-center">
+                                <span><i class="fas fa-shipping-fast me-2"></i><span class="menu-text">3PL</span></span>
+                                <i class="fas fa-chevron-down arrow menu-text"></i>
+                            </a>
+                            <div class="collapse submenu" id="3PLMenu">
+                                <a href="#" class="nav-link"><i class="fas fa-handshake me-2"></i><span class="menu-text">Outsourcing Assigning</span></a>
+                            </div>
+                        </div>
+                    </li>
+
+                    <!-- DLMS -->
+                    <li class="nav-item">
+                        <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#DLMSMenu">
+                            <span>
+                                <i class="fas fa-address-card me-3"></i>
+                                <span class="menu-text">DLMS</span>
+                            </span>
+                            <i class="fas fa-chevron-down arrow menu-text"></i>
+                        </a>
+                        <div class="collapse submenu" id="DLMSMenu">
+                            <a href="#MasterTableMenu" data-bs-toggle="collapse" class="nav-link d-flex justify-content-between align-items-center">
+                                <span><i class="fas fa-database me-2"></i><span class="menu-text">Master Table</span></span>
+                                <i class="fas fa-chevron-down arrow menu-text"></i>
+                            </a>
+                            <div class="collapse submenu" id="MasterTableMenu">
+                                <a href="#" class="nav-link"><i class="fas fa-calendar-alt me-2"></i><span class="menu-text">Leave Type</span></a>
+                                <a href="#" class="nav-link"><i class="fas fa-calendar-days me-2"></i><span class="menu-text">Set Leave Days</span></a>
+                                <a href="#" class="nav-link"><i class="fas fa-scale-balanced me-2"></i><span class="menu-text">Leave Balance</span></a>
+                                <a href="#" class="nav-link"><i class="fas fa-file-pen me-2"></i><span class="menu-text">Driver Leave Request</span></a>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+
+     
+    <main id="main-content">
+        <header class="bg-white border-bottom p-3 d-flex justify-content-between align-items-center sticky-top shadow-sm">
+            <div class="d-flex align-items-center">
+            <h5 class="mb-0 fw-bold text-dark">
+            WELCOME 
+            <span class="animated-name">
+                @User.FindFirst("FullName")?.Value
+            </span>
+            </h5>
+
+            </div>
+            <div class="d-flex align-items-center gap-3">
+            <div class="dropdown">
+                <button class="btn btn-light rounded-circle p-2 position-relative" data-bs-toggle="dropdown">
+                    <i class="fas fa-bell text-muted"></i>
+                    <span class="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-light rounded-circle"></span>
+                </button>
+            </div>
+            <div class="d-flex align-items-center gap-2 bg-light p-1 pe-3 rounded-pill">
+            @* <img src="https://ui-avatars.com/api/?name=Admin&background=3b82f6&color=fff" class="rounded-circle" width="32"> *@
+            @* <span class="fw-semibold small d-none d-md-inline">Administrator</span> *@
+           <form action="/Logout" method="post" style="margin:0;">
+                @Html.AntiForgeryToken()
+                <button type="submit" class="btn btn-danger btn-sm px-3">
+                     <i class="fas fa-sign-out-alt me-1"></i> Logout
+                </button>
+            </form>
+            </div>
+            </div>
+        </header>
+
+        @RenderBody()
+    </main>
+        </div>
+
+        <!-- Flyout Menu -->
+        <div id="flyoutMenu"></div>
+
+        <!-- Scripts -->
+        <!-- ✅ jQuery FIRST -->
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Bootstrap -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- DataTables -->
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+
+<!-- Buttons -->
+<script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
+
+<script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.bootstrap5.min.js"></script>
+
+<!-- Export Dependencies -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+
+<!-- Export Buttons -->
+<script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
+
+<script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.print.min.js"></script>
+
+<script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.colVis.min.js"></script>
+
+<!-- Render Page Scripts -->
+
+<!-- ✅ THEN your page scripts -->
+@RenderSection("Scripts", required: false)
+
+        <script>
+            $(document).ready(function () {
+                const sidebar = $("#sidebar");
+                const flyout = $("#flyoutMenu");
+                let hideTimer = null;
+                let currentHoveredItem = null;
+
+                // Sidebar Toggle
+                $("#menu-toggle").click(function () {
+                    sidebar.toggleClass("collapsed");
+                    if (sidebar.hasClass("collapsed")) {
+                        $(".submenu.show").collapse('hide');
+                    }
+                });
+
+                // Flyout Logic for Collapsed State
+                $(".nav-item").on("mouseenter", function () {
+                    if (!sidebar.hasClass("collapsed")) return;
+                
+                    clearTimeout(hideTimer);
+                    currentHoveredItem = $(this);
+                    const rect = this.getBoundingClientRect();
+                    const title = $(this).find(".menu-text").first().text();
+                
+                    flyout.html(title + ' <i class="fas fa-chevron-right ms-2 small opacity-50"></i>')
+                          .css({ "top": rect.top + "px", "display": "block" });
+                }).on("mouseleave", function () {
+                    hideTimer = setTimeout(() => {
+                        if (!flyout.is(":hover")) flyout.hide();
+                    }, 200);
+                });
+
+                flyout.on("mouseenter", () => clearTimeout(hideTimer))
+                      .on("mouseleave", () => {
+                          hideTimer = setTimeout(() => flyout.hide(), 200);
+                      })
+                      .on("click", function() {
+                          if (currentHoveredItem) {
+                              sidebar.removeClass("collapsed");
+                              const link = currentHoveredItem.find("a").first();
+                              const target = link.attr("href");
+                              if (target && target.startsWith("#")) {
+                                  $(target).collapse('show');
+                              } else {
+                                  window.location.href = target;
+                              }
+                          }
+                          flyout.hide();
+                      });
+
+                // Search Functionality
+                $("#menuSearch").on("keyup", function () {
+                    const value = $(this).val().toLowerCase();
+                    const links = $("#menuList a.nav-link");
+
+                    links.each(function() {
+                        const link = $(this);
+                        const textElement = link.find(".menu-text").first();
+                        let originalText = textElement.data("original");
+                    
+                        if (!originalText) {
+                            originalText = textElement.text();
+                            textElement.data("original", originalText);
+                        }
+
+                        if (value !== "" && originalText.toLowerCase().includes(value)) {
+                            link.show();
+                            const regex = new RegExp(`(${value})`, "gi");
+                            textElement.html(originalText.replace(regex, `<span class="menu-highlight">$1</span>`));
+                        
+                            // Expand parents
+                            link.parents(".collapse").collapse('show');
+                        } else {
+                            textElement.html(originalText);
+                            link.toggle(value === "");
+                        }
+                    });
+                });
+            });
+
+// ==========================
+// ACTIVE MENU + AUTO EXPAND
+// ==========================
+$(document).ready(function () {
+
+    let currentUrl = window.location.pathname.toLowerCase();
+
+    // loop all nav links
+    $(".nav-link").each(function () {
+
+        let link = $(this).attr("href");
+
+        if (!link || link === "#" || link.startsWith("#")) return;
+
+        if (currentUrl.includes(link.toLowerCase())) {
+
+            // highlight current
+            $(this).addClass("active");
+
+            // 🔥 expand all parent collapse
+            $(this).parents(".collapse").each(function () {
+                $(this).addClass("show");
+            });
+
+            // 🔥 rotate arrow properly
+            $(this).parents(".nav-item").find(".arrow").addClass("rotate");
+
+        }
+    });
+
+});
+        </script>
+    </body>
+    </html>
+

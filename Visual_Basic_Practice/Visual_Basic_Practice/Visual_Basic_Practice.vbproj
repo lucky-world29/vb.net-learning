@@ -1,0 +1,10 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>Visual_Basic_Practice</RootNamespace>
+    <TargetFramework>net10.0</TargetFramework>
+	  <StartupObject>Visual_Basic_Practice.TwoDArray</StartupObject>
+  </PropertyGroup>
+
+</Project>

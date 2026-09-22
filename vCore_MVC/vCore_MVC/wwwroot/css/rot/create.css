@@ -1,0 +1,260 @@
+﻿
+:root {
+    --primary-blue: #0d6efd;
+    --header-bg: #f1f4f9;
+    --section-header-bg: #343a40;
+    --border-color: #dee2e6;
+    --accent-color: #0056b3;
+}
+
+body {
+    background-color: #f8f9fa;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-size: 0.82rem;
+    color: #333;
+}
+
+/* Main Page Header */
+.main-header {
+    background: linear-gradient(135deg, #0056b3 0%, #007bff 100%);
+    color: white;
+    padding: 12px 20px;
+    border-radius: 0 0 8px 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+    .main-header h1 {
+        font-size: 1.25rem;
+        margin: 0;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+    }
+
+    .main-header .header-info {
+        font-size: 0.75rem;
+        opacity: 0.9;
+    }
+
+/* Section Styling */
+.card {
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+    margin-bottom: 1.25rem;
+    overflow: hidden;
+}
+
+.section-header {
+    background-color: #f1f4f9;
+    border-bottom: 1px solid var(--border-color);
+    padding: 8px 15px;
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+    color: #444;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+    .section-header:hover {
+        background-color: #e9ecef;
+    }
+
+    .section-header i.section-icon {
+        margin-right: 10px;
+        color: var(--accent-color);
+        width: 20px;
+        text-align: center;
+    }
+
+    .section-header .toggle-icon {
+        margin-left: auto;
+        font-size: 0.7rem;
+        color: #888;
+    }
+
+/* Compact Controls */
+.form-label {
+    margin-bottom: 0.15rem;
+    font-weight: 600;
+    color: #555;
+    font-size: 0.78rem;
+}
+
+.form-control, .form-select {
+    padding: 0.3rem 0.6rem;
+    font-size: 0.82rem;
+    border-radius: 4px;
+    border: 1px solid #ced4da;
+    background-color: #fff;
+}
+
+    .form-control:focus, .form-select:focus {
+        border-color: var(--primary-blue);
+        box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.1);
+    }
+
+    .form-control[readonly] {
+        background-color: #f8f9fa;
+        font-weight: 600;
+    }
+
+.input-group-text {
+    padding: 0.3rem 0.6rem;
+    font-size: 0.8rem;
+    background-color: #f8f9fa;
+    color: #666;
+}
+
+/* Colored Sub-headers */
+.sub-card-header {
+    padding: 6px 12px;
+    font-weight: 600;
+    font-size: 0.8rem;
+    text-align: center;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.bg-pickup {
+    background: linear-gradient(to right, #f59e0b, #d97706);
+}
+
+.bg-delivery {
+    background: linear-gradient(to right, #4b5563, #374151);
+}
+
+.bg-collection {
+    background: linear-gradient(to right, #ef4444, #dc2626);
+}
+
+/* Table Styling */
+.table {
+    font-size: 0.78rem;
+    margin-bottom: 0;
+}
+
+    .table thead th {
+        background-color: #f8f9fa;
+        color: #4b5563;
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 0.7rem;
+        letter-spacing: 0.3px;
+        border-top: none;
+        padding: 10px 8px;
+    }
+
+    .table td {
+        padding: 6px 8px;
+        vertical-align: middle;
+    }
+
+/* Buttons */
+.btn-sm {
+    padding: 0.25rem 0.6rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+.btn-primary {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+
+.btn-success {
+    background-color: #198754;
+    border-color: #198754;
+}
+
+.required-star {
+    color: #dc3545;
+    margin-left: 2px;
+}
+
+.textarea-compact {
+    height: 50px;
+    resize: none;
+}
+
+.row-compact {
+    margin-bottom: 10px;
+}
+
+.action-icon {
+    cursor: pointer;
+    transition: transform 0.1s;
+}
+
+    .action-icon:hover {
+        transform: scale(1.2);
+    }
+
+
+/* POPUP STYLE of Commodity*/
+.ui-autocomplete {
+    border-radius: 10px;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    padding: 5px 0;
+    max-height: 250px;
+    overflow-y: auto;
+    width: 200px;
+    /* Smooth fade + slide */ animation: fadeInDropdown 0.25s ease;
+}
+
+/* Each item */ .ui-menu-item-wrapper {
+    padding: 10px 15px;
+    font-size: 10px;
+    transition: all 0.25s ease;
+    border-radius: 6px;
+    margin: 2px 6px;
+}
+
+    /* Hover effect */ .ui-menu-item-wrapper:hover {
+        background: linear-gradient(135deg, #007bff, #00c6ff);
+        color: white;
+        transform: translateX(5px) scale(1.02);
+        box-shadow: 0 4px 10px rgba(0,123,255,0.3);
+    }
+
+/* Active (keyboard navigation) */ .ui-state-active {
+    background: linear-gradient(135deg, #007bff, #00c6ff) !important;
+    color: #fff !important;
+    border: none !important;
+}
+
+/* Scrollbar styling (optional but cool) */ .ui-autocomplete::-webkit-scrollbar {
+    width: 6px;
+}
+
+.ui-autocomplete::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 10px;
+}
+
+    .ui-autocomplete::-webkit-scrollbar-thumb:hover {
+        background: #999;
+    }
+ 
+
+.select2-container--default .select2-selection--multiple {
+    min-height: 32px;
+    font-size: 12px;
+    border: 1px solid #ced4da;
+}
+
+.select2-selection__choice {
+    font-size: 11px;
+    padding: 2px 6px;
+}
+
+

@@ -1,0 +1,120 @@
+﻿<!--
+    
+this is the default view for the Home controller's Index action.
+It displays a welcome message and some basic information about the application.
+You can customize this view to include more content or styling as needed.
+
+[
+   the code is now in the _Layout.cshtml  here u can modify the page so no need to change in every page
+]
+this one required to set the title and favicon for the application. 
+You can modify the title and the path to the favicon as needed.
+ <link rel="icon" type="image/png" href="/GussNewIco.ico">
+
+
+-->
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="p-4">
+    <!-- Welcome Section -->
+    <div class="mb-4 animate__animated animate__fadeIn">
+        <h5 class="mb-0 fw-bold text-dark">
+            WELCOME
+            <span class="animated-name">
+                @User.FindFirst("FullName")?.Value
+            </span>
+        </h5>
+        <p class="text-muted">Here is what's happening with your transport operations today.</p>
+    </div>
+
+    <!-- Stats Grid -->
+    <div class="row g-4 mb-4">
+        <div class="col-md-3 animate__animated animate__fadeInUp" style="animation-delay: 0.1s;">
+            <div class="stat-card">
+                <div class="icon-box bg-primary-subtle text-primary"><i class="fas fa-truck"></i></div>
+                <h4 class="fw-bold mb-1">124</h4>
+                <p class="text-muted small mb-0">Active Jobs</p>
+            </div>
+        </div>
+        <div class="col-md-3 animate__animated animate__fadeInUp" style="animation-delay: 0.2s;">
+            <div class="stat-card">
+                <div class="icon-box bg-success-subtle text-success"><i class="fas fa-check-circle"></i></div>
+                <h4 class="fw-bold mb-1">89</h4>
+                <p class="text-muted small mb-0">Completed Today</p>
+            </div>
+        </div>
+        <div class="col-md-3 animate__animated animate__fadeInUp" style="animation-delay: 0.3s;">
+            <div class="stat-card">
+                <div class="icon-box bg-warning-subtle text-warning"><i class="fas fa-clock"></i></div>
+                <h4 class="fw-bold mb-1">12</h4>
+                <p class="text-muted small mb-0">Pending Approval</p>
+            </div>
+        </div>
+        <div class="col-md-3 animate__animated animate__fadeInUp" style="animation-delay: 0.4s;">
+            <div class="stat-card">
+                <div class="icon-box bg-danger-subtle text-danger"><i class="fas fa-exclamation-triangle"></i></div>
+                <h4 class="fw-bold mb-1">3</h4>
+                <p class="text-muted small mb-0">Urgent Alerts</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Access Grid -->
+    <div class="row g-4">
+        <div class="col-lg-8">
+            <div class="stat-card h-100">
+                <h5 class="fw-bold mb-4">Recent Activity</h5>
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Job ID</th>
+                                <th>Client</th>
+                                <th>Status</th>
+                                <th>Time</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="fw-semibold">#ROT-2024-0010</td>
+                                <td>Global Logistics</td>
+                                <td><span class="badge bg-success-subtle text-success">Delivered</span></td>
+                                <td class="text-muted small">10 mins ago</td>
+                            </tr>
+                            <tr>
+                                <td class="fw-semibold">#ROT-2024-0011</td>
+                                <td>Swift Carriers</td>
+                                <td><span class="badge bg-primary-subtle text-primary">In Transit</span></td>
+                                <td class="text-muted small">25 mins ago</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="stat-card h-100">
+                <h5 class="fw-bold mb-4">Quick Actions</h5>
+                <div class="d-grid gap-3">
+                    <a href="/Rot/Create" class="btn btn-primary p-3 text-start d-flex align-items-center justify-content-between">
+                        <span><i class="fas fa-plus-circle me-2"></i> Create New ROT</span>
+                        <i class="fas fa-chevron-right small opacity-50"></i>
+                    </a>
+                    <button class="btn btn-outline-dark p-3 text-start d-flex align-items-center justify-content-between">
+                        <span><i class="fas fa-user-plus me-2"></i> Manage Users</span>
+                        <i class="fas fa-chevron-right small opacity-50"></i>
+                    </button>
+                    <button class="btn btn-outline-dark p-3 text-start d-flex align-items-center justify-content-between">
+                        <span><i class="fas fa-file-export me-2"></i> System Reports</span>
+                        <i class="fas fa-chevron-right small opacity-50"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,185 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\vb.net-learning\\vCore_MVC\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{D2B848E0-9A44-1768-3DFF-99E8C221A7D8}|vCore_MVC\\vCore_MVC.csproj|d:\\vb.net-learning\\vcore_mvc\\vcore_mvc\\views\\rot\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{D2B848E0-9A44-1768-3DFF-99E8C221A7D8}|vCore_MVC\\vCore_MVC.csproj|solutionrelative:vcore_mvc\\views\\rot\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D2B848E0-9A44-1768-3DFF-99E8C221A7D8}|vCore_MVC\\vCore_MVC.csproj|d:\\vb.net-learning\\vcore_mvc\\vcore_mvc\\views\\rot\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{D2B848E0-9A44-1768-3DFF-99E8C221A7D8}|vCore_MVC\\vCore_MVC.csproj|solutionrelative:vcore_mvc\\views\\rot\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D2B848E0-9A44-1768-3DFF-99E8C221A7D8}|vCore_MVC\\vCore_MVC.csproj|d:\\vb.net-learning\\vcore_mvc\\vcore_mvc\\models\\rot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D2B848E0-9A44-1768-3DFF-99E8C221A7D8}|vCore_MVC\\vCore_MVC.csproj|solutionrelative:vcore_mvc\\models\\rot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D2B848E0-9A44-1768-3DFF-99E8C221A7D8}|vCore_MVC\\vCore_MVC.csproj|d:\\vb.net-learning\\vcore_mvc\\vcore_mvc\\controllers\\rotcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D2B848E0-9A44-1768-3DFF-99E8C221A7D8}|vCore_MVC\\vCore_MVC.csproj|solutionrelative:vcore_mvc\\controllers\\rotcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D2B848E0-9A44-1768-3DFF-99E8C221A7D8}|vCore_MVC\\vCore_MVC.csproj|d:\\vb.net-learning\\vcore_mvc\\vcore_mvc\\controllers\\administrationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D2B848E0-9A44-1768-3DFF-99E8C221A7D8}|vCore_MVC\\vCore_MVC.csproj|solutionrelative:vcore_mvc\\controllers\\administrationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D2B848E0-9A44-1768-3DFF-99E8C221A7D8}|vCore_MVC\\vCore_MVC.csproj|d:\\vb.net-learning\\vcore_mvc\\vcore_mvc\\views\\organisationmaster\\branchsubunit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{D2B848E0-9A44-1768-3DFF-99E8C221A7D8}|vCore_MVC\\vCore_MVC.csproj|solutionrelative:vcore_mvc\\views\\organisationmaster\\branchsubunit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D2B848E0-9A44-1768-3DFF-99E8C221A7D8}|vCore_MVC\\vCore_MVC.csproj|d:\\vb.net-learning\\vcore_mvc\\vcore_mvc\\views\\organisationmaster\\branch.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{D2B848E0-9A44-1768-3DFF-99E8C221A7D8}|vCore_MVC\\vCore_MVC.csproj|solutionrelative:vcore_mvc\\views\\organisationmaster\\branch.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D2B848E0-9A44-1768-3DFF-99E8C221A7D8}|vCore_MVC\\vCore_MVC.csproj|d:\\vb.net-learning\\vcore_mvc\\vcore_mvc\\controllers\\organisationmastercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D2B848E0-9A44-1768-3DFF-99E8C221A7D8}|vCore_MVC\\vCore_MVC.csproj|solutionrelative:vcore_mvc\\controllers\\organisationmastercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D2B848E0-9A44-1768-3DFF-99E8C221A7D8}|vCore_MVC\\vCore_MVC.csproj|d:\\vb.net-learning\\vcore_mvc\\vcore_mvc\\models\\coreuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D2B848E0-9A44-1768-3DFF-99E8C221A7D8}|vCore_MVC\\vCore_MVC.csproj|solutionrelative:vcore_mvc\\models\\coreuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D2B848E0-9A44-1768-3DFF-99E8C221A7D8}|vCore_MVC\\vCore_MVC.csproj|d:\\vb.net-learning\\vcore_mvc\\vcore_mvc\\views\\administration\\users.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{D2B848E0-9A44-1768-3DFF-99E8C221A7D8}|vCore_MVC\\vCore_MVC.csproj|solutionrelative:vcore_mvc\\views\\administration\\users.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 642,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Create.cshtml",
+              "DocumentMoniker": "D:\\vb.net-learning\\vCore_MVC\\vCore_MVC\\Views\\Rot\\Create.cshtml",
+              "RelativeDocumentMoniker": "vCore_MVC\\Views\\Rot\\Create.cshtml",
+              "ToolTip": "D:\\vb.net-learning\\vCore_MVC\\vCore_MVC\\Views\\Rot\\Create.cshtml",
+              "RelativeToolTip": "vCore_MVC\\Views\\Rot\\Create.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-07-24T10:04:55.716Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\vb.net-learning\\vCore_MVC\\vCore_MVC\\Views\\Rot\\Index.cshtml",
+              "RelativeDocumentMoniker": "vCore_MVC\\Views\\Rot\\Index.cshtml",
+              "ToolTip": "D:\\vb.net-learning\\vCore_MVC\\vCore_MVC\\Views\\Rot\\Index.cshtml",
+              "RelativeToolTip": "vCore_MVC\\Views\\Rot\\Index.cshtml",
+              "ViewState": "AgIAABcAAAAAAAAAAAAAABEAAAAQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-07-24T10:04:56.681Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Rot.cs",
+              "DocumentMoniker": "D:\\vb.net-learning\\vCore_MVC\\vCore_MVC\\Models\\Rot.cs",
+              "RelativeDocumentMoniker": "vCore_MVC\\Models\\Rot.cs",
+              "ToolTip": "D:\\vb.net-learning\\vCore_MVC\\vCore_MVC\\Models\\Rot.cs",
+              "RelativeToolTip": "vCore_MVC\\Models\\Rot.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-24T10:04:45.628Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "RotController.cs",
+              "DocumentMoniker": "D:\\vb.net-learning\\vCore_MVC\\vCore_MVC\\Controllers\\RotController.cs",
+              "RelativeDocumentMoniker": "vCore_MVC\\Controllers\\RotController.cs",
+              "ToolTip": "D:\\vb.net-learning\\vCore_MVC\\vCore_MVC\\Controllers\\RotController.cs",
+              "RelativeToolTip": "vCore_MVC\\Controllers\\RotController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAYAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-24T10:04:26.562Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "BranchSubUnit.cshtml",
+              "DocumentMoniker": "D:\\vb.net-learning\\vCore_MVC\\vCore_MVC\\Views\\OrganisationMaster\\BranchSubUnit.cshtml",
+              "RelativeDocumentMoniker": "vCore_MVC\\Views\\OrganisationMaster\\BranchSubUnit.cshtml",
+              "ToolTip": "D:\\vb.net-learning\\vCore_MVC\\vCore_MVC\\Views\\OrganisationMaster\\BranchSubUnit.cshtml",
+              "RelativeToolTip": "vCore_MVC\\Views\\OrganisationMaster\\BranchSubUnit.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-05-13T05:00:15.877Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Branch.cshtml",
+              "DocumentMoniker": "D:\\vb.net-learning\\vCore_MVC\\vCore_MVC\\Views\\OrganisationMaster\\Branch.cshtml",
+              "RelativeDocumentMoniker": "vCore_MVC\\Views\\OrganisationMaster\\Branch.cshtml",
+              "ToolTip": "D:\\vb.net-learning\\vCore_MVC\\vCore_MVC\\Views\\OrganisationMaster\\Branch.cshtml",
+              "RelativeToolTip": "vCore_MVC\\Views\\OrganisationMaster\\Branch.cshtml",
+              "ViewState": "AgIAAJUDAAAAAAAAAAAAAKYDAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-05-13T04:59:22.363Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "OrganisationMasterController.cs",
+              "DocumentMoniker": "D:\\vb.net-learning\\vCore_MVC\\vCore_MVC\\Controllers\\OrganisationMasterController.cs",
+              "RelativeDocumentMoniker": "vCore_MVC\\Controllers\\OrganisationMasterController.cs",
+              "ToolTip": "D:\\vb.net-learning\\vCore_MVC\\vCore_MVC\\Controllers\\OrganisationMasterController.cs",
+              "RelativeToolTip": "vCore_MVC\\Controllers\\OrganisationMasterController.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAABoBAAASAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-11T07:03:06.309Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "Users.cshtml",
+              "DocumentMoniker": "D:\\vb.net-learning\\vCore_MVC\\vCore_MVC\\Views\\Administration\\Users.cshtml",
+              "RelativeDocumentMoniker": "vCore_MVC\\Views\\Administration\\Users.cshtml",
+              "ToolTip": "D:\\vb.net-learning\\vCore_MVC\\vCore_MVC\\Views\\Administration\\Users.cshtml",
+              "RelativeToolTip": "vCore_MVC\\Views\\Administration\\Users.cshtml",
+              "ViewState": "AgIAABoBAAAAAAAAAADwvzYBAAAjAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-05-11T04:32:37.528Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "CoreUser.cs",
+              "DocumentMoniker": "D:\\vb.net-learning\\vCore_MVC\\vCore_MVC\\Models\\CoreUser.cs",
+              "RelativeDocumentMoniker": "vCore_MVC\\Models\\CoreUser.cs",
+              "ToolTip": "D:\\vb.net-learning\\vCore_MVC\\vCore_MVC\\Models\\CoreUser.cs",
+              "RelativeToolTip": "vCore_MVC\\Models\\CoreUser.cs",
+              "ViewState": "AgIAAAUAAAAAAAAAAAAowBAAAAAlAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-11T03:36:58.35Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "AdministrationController.cs",
+              "DocumentMoniker": "D:\\vb.net-learning\\vCore_MVC\\vCore_MVC\\Controllers\\AdministrationController.cs",
+              "RelativeDocumentMoniker": "vCore_MVC\\Controllers\\AdministrationController.cs",
+              "ToolTip": "D:\\vb.net-learning\\vCore_MVC\\vCore_MVC\\Controllers\\AdministrationController.cs",
+              "RelativeToolTip": "vCore_MVC\\Controllers\\AdministrationController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAE8BAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-08T04:23:22.102Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,471 @@
+﻿@model List<vCore_MVC.Models.BranchSubUnitVM>
+
+@{
+    ViewData["Title"] = "Branch Sub Unit";
+}
+
+<style>
+
+    .custom-table {
+        border-collapse: separate;
+        border-spacing: 0;
+    }
+
+        .custom-table thead th {
+            background: #f4f6fb;
+            font-size: 14px;
+            font-weight: 700;
+            color: #111827;
+            padding: 14px 12px;
+            border-bottom: 2px solid #dee2e6;
+            white-space: nowrap;
+        }
+
+        .custom-table tbody td {
+            padding: 12px;
+            font-size: 13px;
+            vertical-align: middle;
+        }
+
+        .custom-table tbody tr:hover {
+            background: #f9fafb;
+        }
+
+    .icon-btn {
+        border: none;
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
+        margin-right: 6px;
+        background: #f3f4f6;
+        transition: .2s;
+    }
+
+        .icon-btn:hover {
+            transform: translateY(-2px);
+        }
+
+    .status-badge {
+        padding: 7px 18px;
+        border-radius: 8px;
+        color: white;
+        font-size: 12px;
+        font-weight: 600;
+    }
+
+    .active-badge {
+        background: #6fd3b1;
+    }
+
+    .inactive-badge {
+        background: #e76f51;
+    }
+
+    .custom-input {
+        height: 48px;
+        border-radius: 12px;
+    }
+
+</style>
+
+<div class="card shadow-sm border-0">
+
+    <div class="card-header bg-white d-flex justify-content-between align-items-center">
+
+        <h5 class="fw-bold mb-0">
+            Branch Sub Unit Management
+        </h5>
+
+        <button class="btn btn-primary rounded-pill"
+                id="btnAddSubUnit">
+
+            <i class="fa fa-plus me-2"></i>
+
+            Add Branch Sub Unit
+
+        </button>
+
+    </div>
+
+    <div class="card-body">
+
+        <table id="subUnitTable"
+               class="table custom-table align-middle">
+
+            <thead>
+                <tr>
+
+                    <th style="width:150px;">
+                        Actions
+                    </th>
+
+                    <th>
+                        Sub Unit Name
+                    </th>
+
+                    <th>
+                        Sub Unit Code
+                    </th>
+
+                    <th>
+                        Branch Name
+                    </th>
+
+                    <th>
+                        Status
+                    </th>
+
+                </tr>
+            </thead>
+
+            <tbody>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+
+                        <td>
+
+                            <!-- VIEW -->
+                            <button class="icon-btn text-success viewBtn"
+                                    data-id="@item.Id"
+                                    data-name="@item.Name"
+                                    data-code="@item.ShortCode"
+                                    data-branch="@item.BranchId"
+                                    data-branchname="@item.BranchName"
+                                    data-status="@item.Status">
+
+                                <i class="fa fa-eye"></i>
+
+                            </button>
+
+                            <!-- EDIT -->
+                            <button class="icon-btn text-primary editBtn"
+                                    data-id="@item.Id"
+                                    data-name="@item.Name"
+                                    data-code="@item.ShortCode"
+                                    data-branch="@item.BranchId">
+
+                                <i class="fa fa-pen"></i>
+
+                            </button>
+
+                            <!-- DELETE -->
+                            <button class="icon-btn text-danger deleteBtn"
+                                    data-id="@item.Id">
+
+                                <i class="fa fa-trash"></i>
+
+                            </button>
+
+                        </td>
+
+                        <td class="fw-semibold">
+                            @item.Name
+                        </td>
+
+                        <td>
+                            @item.ShortCode
+                        </td>
+
+                        <td>
+                            @item.BranchName
+                        </td>
+
+                        <td>
+
+                            @if (item.Status == 1)
+                            {
+                                <span class="status-badge active-badge">
+                                    Active
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="status-badge inactive-badge">
+                                    Inactive
+                                </span>
+                            }
+
+                        </td>
+
+                    </tr>
+                }
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+<!-- ========================================= -->
+<!-- MODAL -->
+<!-- ========================================= -->
+
+<div class="modal fade"
+     id="subUnitModal"
+     tabindex="-1">
+
+    <div class="modal-dialog modal-dialog-centered">
+
+        <div class="modal-content border-0 shadow-lg rounded-4">
+
+            <!-- HEADER -->
+            <div class="modal-header bg-primary text-white">
+
+                <h5 class="modal-title fw-bold">
+
+                    <i class="fa fa-sitemap me-2"></i>
+
+                    Branch Sub Unit
+
+                </h5>
+
+                <button type="button"
+                        class="btn-close btn-close-white"
+                        data-bs-dismiss="modal">
+                </button>
+
+            </div>
+
+            <!-- BODY -->
+            <div class="modal-body p-4">
+
+                <input type="hidden"
+                       id="editId">
+
+                <!-- BRANCH -->
+                <div class="mb-4">
+
+                    <label class="form-label fw-semibold">
+                        Branch
+                    </label>
+
+                    <select id="branchDropdown"
+                            class="form-select custom-input">
+
+                        <option value="">
+                            Select Branch
+                        </option>
+
+                        @foreach (var item in ViewBag.Branches)
+                        {
+                            <option value="@item.Id">
+                                @item.Name
+                            </option>
+                        }
+
+                    </select>
+
+                </div>
+
+                <!-- NAME -->
+                <div class="mb-4">
+
+                    <label class="form-label fw-semibold">
+                        Sub Unit Name
+                    </label>
+
+                    <input type="text"
+                           id="subUnitName"
+                           class="form-control custom-input">
+
+                </div>
+
+                <!-- CODE -->
+                <div class="mb-3">
+
+                    <label class="form-label fw-semibold">
+                        Sub Unit Code
+                    </label>
+
+                    <input type="text"
+                           id="subUnitCode"
+                           class="form-control custom-input">
+
+                </div>
+
+            </div>
+
+            <!-- FOOTER -->
+            <div class="modal-footer border-0">
+
+                <button class="btn btn-light rounded-pill px-4"
+                        data-bs-dismiss="modal">
+
+                    Cancel
+
+                </button>
+
+                <button class="btn btn-primary rounded-pill px-4"
+                        id="saveBtn">
+
+                    <i class="fa fa-save me-2"></i>
+
+                    Save
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+@section Scripts {
+
+    <script>
+
+        let subUnitModal = new bootstrap.Modal(
+            document.getElementById('subUnitModal')
+        );
+
+        // =====================================
+        // DATATABLE
+        // =====================================
+        $('#subUnitTable').DataTable({
+
+            responsive: true,
+
+            pageLength: 10,
+
+            lengthMenu: [10,25,50,100]
+
+        });
+
+        // =====================================
+        // CLEAR FORM
+        // =====================================
+        function clearForm()
+        {
+            $('#editId').val('');
+
+            $('#subUnitName').val('');
+
+            $('#subUnitCode').val('');
+
+            $('#branchDropdown').val('');
+        }
+
+        // =====================================
+        // ADD
+        // =====================================
+        $('#btnAddSubUnit').on('click', function () {
+
+            clearForm();
+
+            subUnitModal.show();
+
+        });
+
+        // =====================================
+        // EDIT
+        // =====================================
+        $(document).on('click', '.editBtn', function () {
+
+            $('#editId').val($(this).data('id'));
+
+            $('#subUnitName').val($(this).data('name'));
+
+            $('#subUnitCode').val($(this).data('code'));
+
+            $('#branchDropdown').val($(this).data('branch'));
+
+            subUnitModal.show();
+
+        });
+
+        // =====================================
+        // SAVE
+        // =====================================
+        $('#saveBtn').on('click', function () {
+
+            let model = {
+
+                Id: parseInt($('#editId').val()) || 0,
+
+                Name: $('#subUnitName').val(),
+
+                ShortCode: $('#subUnitCode').val(),
+
+                BranchId: $('#branchDropdown').val()
+
+            };
+
+            $.ajax({
+
+                url: '/OrganisationMaster/SaveBranchSubUnit',
+
+                type: 'POST',
+
+                data: model,
+
+                success: function (res) {
+
+                    if (res.success) {
+
+                        location.reload();
+
+                    }
+                    else {
+
+                        alert(res.message || 'Save failed');
+
+                    }
+
+                },
+
+                error: function () {
+
+                    alert('Something went wrong');
+
+                }
+
+            });
+
+        });
+
+        // =====================================
+        // DELETE
+        // =====================================
+        $(document).on('click', '.deleteBtn', function () {
+
+            let id = $(this).data('id');
+
+            if (!confirm('Delete this sub unit?'))
+                return;
+
+            $.ajax({
+
+                url: '/OrganisationMaster/DeleteBranchSubUnit',
+
+                type: 'POST',
+
+                data: { id: id },
+
+                success: function (res) {
+
+                    if (res.success) {
+
+                        location.reload();
+
+                    }
+                    else {
+
+                        alert('Delete failed');
+
+                    }
+
+                }
+
+            });
+
+        });
+
+    </script>
+
+}
